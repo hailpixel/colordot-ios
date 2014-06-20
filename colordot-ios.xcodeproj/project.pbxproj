@@ -22,6 +22,7 @@
 		0311D356195454C5008369C0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0311D33A195454C5008369C0 /* CoreData.framework */; };
 		0311D35E195454C5008369C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0311D35C195454C5008369C0 /* InfoPlist.strings */; };
 		0311D360195454C5008369C0 /* colordot_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D35F195454C5008369C0 /* colordot_iosTests.m */; };
+		0311D36C195456B6008369C0 /* PaletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D36B195456B6008369C0 /* PaletteViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		0311D35B195454C5008369C0 /* colordot-iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "colordot-iosTests-Info.plist"; sourceTree = "<group>"; };
 		0311D35D195454C5008369C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0311D35F195454C5008369C0 /* colordot_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = colordot_iosTests.m; sourceTree = "<group>"; };
+		0311D36A195456B6008369C0 /* PaletteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteViewController.h; sourceTree = "<group>"; };
+		0311D36B195456B6008369C0 /* PaletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,7 @@
 		0311D33C195454C5008369C0 /* colordot-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0311D3691954561C008369C0 /* Palette Views */,
 				0311D345195454C5008369C0 /* AppDelegate.h */,
 				0311D346195454C5008369C0 /* AppDelegate.m */,
 				0311D34B195454C5008369C0 /* Images.xcassets */,
@@ -151,6 +155,15 @@
 				0311D35C195454C5008369C0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0311D3691954561C008369C0 /* Palette Views */ = {
+			isa = PBXGroup;
+			children = (
+				0311D36A195456B6008369C0 /* PaletteViewController.h */,
+				0311D36B195456B6008369C0 /* PaletteViewController.m */,
+			);
+			name = "Palette Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0311D36C195456B6008369C0 /* PaletteViewController.m in Sources */,
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
@@ -373,6 +387,7 @@
 				GCC_PREFIX_HEADER = "colordot-ios/colordot-ios-Prefix.pch";
 				INFOPLIST_FILE = "colordot-ios/colordot-ios-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -386,6 +401,7 @@
 				GCC_PREFIX_HEADER = "colordot-ios/colordot-ios-Prefix.pch";
 				INFOPLIST_FILE = "colordot-ios/colordot-ios-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
