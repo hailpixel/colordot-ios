@@ -20,6 +20,9 @@
 @property CGFloat xDelta;
 @property CGFloat yDelta;
 
+@property NSUInteger colorCount;
+@property NSIndexPath *activeCellIndexPath;
+
 - (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell;
 
 - (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer;
@@ -44,6 +47,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.colorCount = 6;
+    self.activeCellIndexPath = nil;
     
     self.xDelta = 0.0f;
     self.yDelta = 0.0f;
@@ -74,14 +80,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    [self instantiateColorPickerViewForCell:cell];
+//    [self instantiateColorPickerViewForCell:cell];
+    
+    cell.backgroundColor = [UIColor greenColor];
     
     return cell;
 }
@@ -111,7 +119,8 @@
 }
 
 
-#pragma mark - Gesture handling
+#pragma mark - Color Management
+#pragma mark Gesture handling
 - (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer;
 {
     // Call different methods depending on which gesture recognizer was fired
@@ -160,7 +169,7 @@
     [self updateColorWithPersistentValues];
 }
 
-#pragma mark Color updating
+#pragma mark Color Updating
 - (void)updateColorWithPersistentValues;
 {
     // Set background color according to stored values
@@ -168,6 +177,44 @@
     self.colorPickerView.backgroundColor = updatedColor;
 }
 
+
+#pragma mark - Table view delegate methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Height calculating for index path: %@", indexPath);
+    
+    CGFloat viewHeight = self.tableView.bounds.size.height;
+    CGFloat viewWidth = self.tableView.bounds.size.width;
+    
+    if (self.activeCellIndexPath == nil) {
+        return (viewHeight / self.colorCount);
+    } else {
+        if ([indexPath isEqual:self.activeCellIndexPath]) {
+            return viewWidth;
+        } else {
+            return (viewHeight - viewWidth) / (self.colorCount - 1);
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView beginUpdates];
+    
+//    NSLog(@"Selected index path: %@", indexPath);
+    self.activeCellIndexPath = indexPath;
+    
+    [self.tableView endUpdates];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView beginUpdates];
+    
+    self.activeCellIndexPath = nil;
+    
+    [self.tableView endUpdates];
+}
 
 /*
 // Override to support conditional editing of the table view.
