@@ -43,7 +43,8 @@
 {
     [super viewDidLoad];
     
-    self.colorCount = 6;
+    self.colorsArray = [NSMutableArray arrayWithArray:@[[UIColor whiteColor], [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
+    self.colorCount = self.colorsArray.count;
     self.activeCellIndexPath = nil;
     
     self.xDelta = 0.0f;
@@ -175,7 +176,10 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView beginUpdates];
+    NSLog(@"BEFORE: %@", self.colorsArray);
+    NSUInteger index = [self.activeCellIndexPath indexAtPosition:1];
+    [self.colorsArray replaceObjectAtIndex:index withObject:self.colorPickerView.backgroundColor];
+    [self.tableView reloadData];
     
     [self.colorPickerView removeFromSuperview];
     self.activeCellIndexPath = nil;
