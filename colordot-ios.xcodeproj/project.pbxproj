@@ -22,7 +22,8 @@
 		0311D356195454C5008369C0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0311D33A195454C5008369C0 /* CoreData.framework */; };
 		0311D35E195454C5008369C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0311D35C195454C5008369C0 /* InfoPlist.strings */; };
 		0311D360195454C5008369C0 /* colordot_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D35F195454C5008369C0 /* colordot_iosTests.m */; };
-		0311D36C195456B6008369C0 /* PaletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D36B195456B6008369C0 /* PaletteViewController.m */; };
+		3B4907BE19547997007A6EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4907BD19547997007A6EA6 /* Main.storyboard */; };
+		3BAC61FF19583492004D4B0D /* PaletteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAC61FE19583492004D4B0D /* PaletteTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,8 +55,9 @@
 		0311D35B195454C5008369C0 /* colordot-iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "colordot-iosTests-Info.plist"; sourceTree = "<group>"; };
 		0311D35D195454C5008369C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0311D35F195454C5008369C0 /* colordot_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = colordot_iosTests.m; sourceTree = "<group>"; };
-		0311D36A195456B6008369C0 /* PaletteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteViewController.h; sourceTree = "<group>"; };
-		0311D36B195456B6008369C0 /* PaletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteViewController.m; sourceTree = "<group>"; };
+		3B4907BD19547997007A6EA6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		3BAC61FD19583492004D4B0D /* PaletteTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteTableViewController.h; sourceTree = "<group>"; };
+		3BAC61FE19583492004D4B0D /* PaletteTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,11 +120,13 @@
 		0311D33C195454C5008369C0 /* colordot-ios */ = {
 			isa = PBXGroup;
 			children = (
-				0311D3691954561C008369C0 /* Palette Views */,
+				3BAC61FD19583492004D4B0D /* PaletteTableViewController.h */,
+				3BAC61FE19583492004D4B0D /* PaletteTableViewController.m */,
 				0311D345195454C5008369C0 /* AppDelegate.h */,
 				0311D346195454C5008369C0 /* AppDelegate.m */,
-				0311D34B195454C5008369C0 /* Images.xcassets */,
+				3B4907BD19547997007A6EA6 /* Main.storyboard */,
 				0311D348195454C5008369C0 /* colordot_ios.xcdatamodeld */,
+				0311D34B195454C5008369C0 /* Images.xcassets */,
 				0311D33D195454C5008369C0 /* Supporting Files */,
 			);
 			path = "colordot-ios";
@@ -155,15 +159,6 @@
 				0311D35C195454C5008369C0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		0311D3691954561C008369C0 /* Palette Views */ = {
-			isa = PBXGroup;
-			children = (
-				0311D36A195456B6008369C0 /* PaletteViewController.h */,
-				0311D36B195456B6008369C0 /* PaletteViewController.m */,
-			);
-			name = "Palette Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B4907BE19547997007A6EA6 /* Main.storyboard in Resources */,
 				0311D341195454C5008369C0 /* InfoPlist.strings in Resources */,
 				0311D34C195454C5008369C0 /* Images.xcassets in Resources */,
 			);
@@ -261,8 +257,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0311D36C195456B6008369C0 /* PaletteViewController.m in Sources */,
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
+				3BAC61FF19583492004D4B0D /* PaletteTableViewController.m in Sources */,
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
 			);
@@ -465,6 +461,7 @@
 				0311D365195454C5008369C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0311D366195454C5008369C0 /* Build configuration list for PBXNativeTarget "colordot-iosTests" */ = {
 			isa = XCConfigurationList;
@@ -473,6 +470,7 @@
 				0311D368195454C5008369C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

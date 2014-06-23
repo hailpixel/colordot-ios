@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PaletteViewController.h"
+#import "PaletteTableViewController.h"
 
 @implementation AppDelegate
 
@@ -17,15 +17,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    PaletteViewController *paletteViewController = [[PaletteViewController alloc] init];
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    PaletteTableViewController *controller = (PaletteTableViewController *)navigationController.topViewController;
+    controller.managedObjectContext = self.managedObjectContext;
     
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:paletteViewController];
-    
-    self.window.rootViewController = navController;
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
     return YES;
 }
 
