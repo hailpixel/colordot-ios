@@ -7,19 +7,16 @@
 //
 
 #import "PaletteTableViewController.h"
-
+#import "UIColor+Increments.h"
 
 @interface PaletteTableViewController ()
-
-@property CGFloat hue;
-@property CGFloat saturation;
-@property CGFloat brightness;
 
 @property CGFloat xLagged;
 @property CGFloat yLagged;
 @property CGFloat xDelta;
 @property CGFloat yDelta;
 
+@property NSMutableArray *colorsArray;
 @property NSUInteger colorCount;
 @property NSIndexPath *activeCellIndexPath;
 
@@ -28,8 +25,6 @@
 - (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer;
 - (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer;
-
-- (void)updateColorWithPersistentValues;
 
 @end
 
@@ -55,12 +50,6 @@
     self.yDelta = 0.0f;
     self.xLagged = 0.0f;
     self.yLagged = 0.0f;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,9 +76,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-//    [self instantiateColorPickerViewForCell:cell];
-    
-    cell.backgroundColor = [UIColor greenColor];
+    NSUInteger index = [indexPath indexAtPosition:1];
+    cell.backgroundColor = self.colorsArray[index];
     
     return cell;
 }
@@ -101,13 +89,7 @@
     UIView *colorPickerView = [[UIView alloc] initWithFrame:colorPickerViewFrame];
     self.colorPickerView = colorPickerView;
     
-    colorPickerView.backgroundColor = [UIColor redColor];
-    CGFloat hue = 0.0f, saturation = 0.0f, brightness = 0.0f;
-    [colorPickerView.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:NULL];
-    
-    self.hue = hue;
-    self.saturation = saturation;
-    self.brightness = brightness;
+    colorPickerView.backgroundColor = cell.backgroundColor;
     
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
@@ -135,16 +117,7 @@
 - (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer
 {
     // Update hue and brightness according to past delta values because gestureRecognizer fires on a gesture's ending
-    self.hue += (self.xDelta/1000);
-    self.brightness -= (self.yDelta/1000);
-    
-    // Loop hue value, rather than max/min values
-    if (self.hue < 0.0f) self.hue += 1;
-    else if (self.hue >= 1.0f) self.hue -= 1;
-    
-    if (self.brightness < 0.0f || self.brightness > 1.0f) self.brightness = MAX(MIN(self.brightness, 1.0f), 0.0f);
-    
-    [self updateColorWithPersistentValues];
+    self.colorPickerView.backgroundColor = [self.colorPickerView.backgroundColor cho_colorWithChangeToHue:(self.xDelta/1000) saturation:0.0f brightness:-(self.yDelta/1000)];
     
     // Calculate the delta if the gesture is still occurring, otherwise reset delta values
     // Handling delta values in this way prevents a second gesture resulting in an abrupt change in the background color
@@ -163,26 +136,14 @@
 
 - (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer
 {
-    self.saturation += gestureRecognizer.velocity * 0.005f;
-    if (self.saturation < 0.0f || self.saturation > 1.0f) self.saturation = MAX(MIN(self.saturation, 1.0f), 0.0f);
-    
-    [self updateColorWithPersistentValues];
-}
-
-#pragma mark Color Updating
-- (void)updateColorWithPersistentValues;
-{
-    // Set background color according to stored values
-    UIColor *updatedColor = [UIColor colorWithHue:self.hue saturation:self.saturation brightness:self.brightness alpha:1.0f];
-    self.colorPickerView.backgroundColor = updatedColor;
+    self.colorPickerView.backgroundColor = [self.colorPickerView.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
 }
 
 
 #pragma mark - Table view delegate methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Height calculating for index path: %@", indexPath);
-    
+//    NSLog(@"Height calculating for index path: %@", indexPath);
     CGFloat viewHeight = self.tableView.bounds.size.height;
     CGFloat viewWidth = self.tableView.bounds.size.width;
     
@@ -199,21 +160,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self instantiateColorPickerViewForCell:cell];
+    }];
+    
     [self.tableView beginUpdates];
-    
-//    NSLog(@"Selected index path: %@", indexPath);
     self.activeCellIndexPath = indexPath;
-    
     [self.tableView endUpdates];
+    
+    [CATransaction commit];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView beginUpdates];
     
+    [self.colorPickerView removeFromSuperview];
     self.activeCellIndexPath = nil;
-    
-    [self.tableView endUpdates];
 }
 
 /*
