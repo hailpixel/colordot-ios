@@ -8,6 +8,8 @@
 
 #import "PaletteTableViewController.h"
 #import "UIColor+Increments.h"
+#import "UIColor+HexString.h"
+#import "ColorPickerView.h"
 
 @interface PaletteTableViewController ()
 
@@ -59,6 +61,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -83,11 +86,14 @@
     return cell;
 }
 
+
+#pragma mark - Color Picker Management
+#pragma mark Cell selection
 - (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell
 {
     CGRect cellBounds = cell.contentView.bounds;
     CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.width);
-    UIView *colorPickerView = [[UIView alloc] initWithFrame:colorPickerViewFrame];
+    ColorPickerView *colorPickerView = [[ColorPickerView alloc] initWithFrame:colorPickerViewFrame];
     self.colorPickerView = colorPickerView;
     
     colorPickerView.backgroundColor = cell.backgroundColor;
@@ -101,8 +107,6 @@
     [cell.contentView addSubview:colorPickerView];
 }
 
-
-#pragma mark - Color Management
 #pragma mark Gesture handling
 - (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer;
 {
@@ -176,7 +180,6 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"BEFORE: %@", self.colorsArray);
     NSUInteger index = [self.activeCellIndexPath indexAtPosition:1];
     [self.colorsArray replaceObjectAtIndex:index withObject:self.colorPickerView.backgroundColor];
     [self.tableView reloadData];
