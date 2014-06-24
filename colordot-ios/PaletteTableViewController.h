@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class ColorPickerView;
+@class ColorPickerView, ColorPickerController;
 
 @interface PaletteTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (weak, nonatomic) ColorPickerView *colorPickerView;
+@property (strong, nonatomic) ColorPickerController *colorPickerController;
 
 @end

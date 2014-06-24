@@ -9,24 +9,16 @@
 #import "PaletteTableViewController.h"
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
+#import "ColorPickerController.h"
 #import "ColorPickerView.h"
 
 @interface PaletteTableViewController ()
-
-@property CGFloat xLagged;
-@property CGFloat yLagged;
-@property CGFloat xDelta;
-@property CGFloat yDelta;
 
 @property NSMutableArray *colorsArray;
 @property NSUInteger colorCount;
 @property NSIndexPath *activeCellIndexPath;
 
 - (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell;
-
-- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer;
-- (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer;
-- (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer;
 
 @end
 
@@ -48,11 +40,6 @@
     self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
     self.colorCount = self.colorsArray.count;
     self.activeCellIndexPath = nil;
-    
-    self.xDelta = 0.0f;
-    self.yDelta = 0.0f;
-    self.xLagged = 0.0f;
-    self.yLagged = 0.0f;
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,62 +88,17 @@
 {
     CGRect cellBounds = cell.contentView.bounds;
     CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.width);
-    ColorPickerView *colorPickerView = [[ColorPickerView alloc] initWithFrame:colorPickerViewFrame];
-    self.colorPickerView = colorPickerView;
     
-    colorPickerView.backgroundColor = cell.backgroundColor;
-    colorPickerView.hexLabel.text = [cell.backgroundColor cho_hexString];
+    self.colorPickerController = [[ColorPickerController alloc] init];
     
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
-    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    self.colorPickerController.view.frame = colorPickerViewFrame;
     
-    [colorPickerView addGestureRecognizer:panRecognizer];
-    [colorPickerView addGestureRecognizer:pinchRecognizer];
     
-    [cell.contentView addSubview:colorPickerView];
-}
-
-#pragma mark Gesture handling
-- (void)handleGesture:(UIGestureRecognizer *)gestureRecognizer;
-{
-    // Call different methods depending on which gesture recognizer was fired
-    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        [self panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer];
-    }
-    if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
-        [self pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer];
-    }
-}
-
-- (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer
-{
-    ColorPickerView *cpv = self.colorPickerView;
+    self.colorPickerController.pickerView.backgroundColor = cell.backgroundColor;
+    self.colorPickerController.pickerView.hexLabel.text = [cell.backgroundColor cho_hexString];
     
-    // Update hue and brightness according to past delta values because gestureRecognizer fires on a gesture's ending
-    cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToHue:(self.xDelta/1000) saturation:0.0f brightness:-(self.yDelta/1000)];
-    cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
-    
-    // Calculate the delta if the gesture is still occurring, otherwise reset delta values
-    // Handling delta values in this way prevents a second gesture resulting in an abrupt change in the background color
-    CGPoint point = [gestureRecognizer locationInView:self.view];
-    if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        self.xDelta = point.x - self.xLagged;
-        self.yDelta = point.y - self.yLagged;
-    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        self.xDelta = 0.0f;
-        self.yDelta = 0.0f;
-    }
-    
-    self.xLagged = point.x;
-    self.yLagged = point.y;
-}
-
-- (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer
-{
-    ColorPickerView *cpv = self.colorPickerView;
-
-    cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
-    cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
+    [self addChildViewController:self.colorPickerController];
+    [cell.contentView addSubview:self.colorPickerController.view];
 }
 
 
@@ -200,12 +142,14 @@
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger index = [self.activeCellIndexPath indexAtPosition:1];
-    [self.colorsArray replaceObjectAtIndex:index withObject:self.colorPickerView.backgroundColor];
+    [self.colorsArray replaceObjectAtIndex:index withObject:self.colorPickerController.pickerView.backgroundColor];
     [self.tableView reloadData];
     
-    [self.colorPickerView removeFromSuperview];
+    [self.colorPickerController.view removeFromSuperview];
+    [self.colorPickerController removeFromParentViewController];
+    
     self.activeCellIndexPath = nil;
-    self.colorPickerView = nil;
+    self.colorPickerController = nil;
 }
 
 /*
