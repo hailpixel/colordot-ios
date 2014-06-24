@@ -82,6 +82,7 @@
     
     NSUInteger index = [indexPath indexAtPosition:1];
     cell.backgroundColor = self.colorsArray[index];
+    cell.textLabel.text = [cell.backgroundColor cho_hexString];
     
     return cell;
 }
@@ -97,6 +98,7 @@
     self.colorPickerView = colorPickerView;
     
     colorPickerView.backgroundColor = cell.backgroundColor;
+    colorPickerView.hexLabel.text = [cell.backgroundColor cho_hexString];
     
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
@@ -121,8 +123,11 @@
 
 - (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    ColorPickerView *cpv = self.colorPickerView;
+    
     // Update hue and brightness according to past delta values because gestureRecognizer fires on a gesture's ending
-    self.colorPickerView.backgroundColor = [self.colorPickerView.backgroundColor cho_colorWithChangeToHue:(self.xDelta/1000) saturation:0.0f brightness:-(self.yDelta/1000)];
+    cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToHue:(self.xDelta/1000) saturation:0.0f brightness:-(self.yDelta/1000)];
+    cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
     
     // Calculate the delta if the gesture is still occurring, otherwise reset delta values
     // Handling delta values in this way prevents a second gesture resulting in an abrupt change in the background color
@@ -141,7 +146,10 @@
 
 - (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer
 {
-    self.colorPickerView.backgroundColor = [self.colorPickerView.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
+    ColorPickerView *cpv = self.colorPickerView;
+
+    cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
+    cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
 }
 
 
@@ -165,17 +173,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        [self instantiateColorPickerViewForCell:cell];
-    }];
+    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
     
-    [self.tableView beginUpdates];
-    self.activeCellIndexPath = indexPath;
-    [self.tableView endUpdates];
-    
-    [CATransaction commit];
+    if (!self.colorPickerView) {
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            [self instantiateColorPickerViewForCell:cell];
+        }];
+        
+        [self.tableView beginUpdates];
+        self.activeCellIndexPath = indexPath;
+        [self.tableView endUpdates];
+        
+        [CATransaction commit];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -186,6 +198,7 @@
     
     [self.colorPickerView removeFromSuperview];
     self.activeCellIndexPath = nil;
+    self.colorPickerView = nil;
 }
 
 /*
