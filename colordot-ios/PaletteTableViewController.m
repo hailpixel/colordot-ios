@@ -10,7 +10,6 @@
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
 #import "ColorPickerController.h"
-#import "ColorPickerView.h"
 
 @interface PaletteTableViewController ()
 
@@ -124,7 +123,7 @@
 {
 //    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
     
-    if (!self.colorPickerView) {
+    if (!self.colorPickerController) {
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
