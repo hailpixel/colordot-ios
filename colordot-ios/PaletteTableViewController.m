@@ -45,7 +45,7 @@
 {
     [super viewDidLoad];
     
-    self.colorsArray = [NSMutableArray arrayWithArray:@[[UIColor whiteColor], [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
+    self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
     self.colorCount = self.colorsArray.count;
     self.activeCellIndexPath = nil;
     
@@ -83,6 +83,13 @@
     NSUInteger index = [indexPath indexAtPosition:1];
     cell.backgroundColor = self.colorsArray[index];
     cell.textLabel.text = [cell.backgroundColor cho_hexString];
+    
+    CGFloat brightness = 0.0f;
+    [cell.backgroundColor getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    
+    
+    if (brightness > 0.8f) cell.textLabel.textColor = [UIColor blackColor];
+    else cell.textLabel.textColor = [UIColor whiteColor];
     
     return cell;
 }
@@ -173,7 +180,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
+//    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
     
     if (!self.colorPickerView) {
         [CATransaction begin];

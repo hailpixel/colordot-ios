@@ -1,0 +1,15 @@
+//
+//  Constants.pch
+//  colordot-ios
+//
+//  Created by Colin on 6/24/14.
+//  Copyright (c) 2014 Devin Hunt. All rights reserved.
+//
+
+#ifndef colordot_ios_Constants_pch
+#define colordot_ios_Constants_pch
+
+#define WHITEHSB [UIColor colorWithHue:0.0f saturation:0.0f brightness:1.0f alpha:1.0f]
+#define BLACKHSB [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.0f alpha:1.0f]
+
+#endif

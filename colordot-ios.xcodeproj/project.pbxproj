@@ -58,6 +58,7 @@
 		0311D35B195454C5008369C0 /* colordot-iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "colordot-iosTests-Info.plist"; sourceTree = "<group>"; };
 		0311D35D195454C5008369C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0311D35F195454C5008369C0 /* colordot_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = colordot_iosTests.m; sourceTree = "<group>"; };
+		3B0739C01959BE8B00FF2FAF /* Constants.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.pch; sourceTree = "<group>"; };
 		3B4907BD19547997007A6EA6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3B4EC3B719592FD500D8AF8D /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
 		3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 				0311D33F195454C5008369C0 /* InfoPlist.strings */,
 				0311D342195454C5008369C0 /* main.m */,
 				0311D344195454C5008369C0 /* colordot-ios-Prefix.pch */,
+				3B0739C01959BE8B00FF2FAF /* Constants.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
