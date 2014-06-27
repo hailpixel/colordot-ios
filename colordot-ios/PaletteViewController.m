@@ -209,6 +209,17 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.pullButton.hidden = YES;
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.pullButton.hidden = NO;
+    [self updateButton];
+}
+
 
 #pragma mark - Private methods
 // Split out because deselectRowAtIndexPath: doesn't call didDeselectRowAtIndexPath
