@@ -17,8 +17,8 @@
 @property NSMutableArray *colorsArray;
 @property NSIndexPath *activeCellIndexPath;
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-- (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell;
+@property (weak, nonatomic) UIView *dragUpView;
+@property CGFloat yLagged;
 
 @end
 
@@ -40,6 +40,10 @@
     
     self.colorsArray = [NSMutableArray arrayWithArray:@[[UIColor cyanColor], [UIColor magentaColor], [UIColor yellowColor]]];
     self.activeCellIndexPath = nil;
+    
+    [self.panRecognizer addTarget:self action:@selector(respondToPan:)];
+    
+    [self setupDragUpView];
     [self updateButton];
 }
 
@@ -107,6 +111,35 @@
     }
 }
 
+- (void)respondToPan:(UIGestureRecognizer *)gestureRecognizer;
+{
+    CGFloat y = [gestureRecognizer locationInView:self.view].y;
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.dragUpView.backgroundColor = [UIColor randomColor];
+        [UIView setAnimationsEnabled:NO];
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGFloat yDelta = y - self.yLagged;
+        
+        CGRect viewFrame = self.dragUpView.frame;
+        CGRect buttonFrame = self.pullButton.frame;
+        
+        viewFrame.origin.y += yDelta;
+        buttonFrame.origin.y += yDelta;
+        viewFrame.size.height -= yDelta;
+        
+        [self.tableView beginUpdates];
+        self.dragUpView.frame = viewFrame;
+        [self.tableView endUpdates];
+        self.pullButton.frame = buttonFrame;
+        
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [UIView setAnimationsEnabled:YES];
+    }
+    
+    self.yLagged = y;
+}
+
 
 #pragma mark - Color Picker Management
 #pragma mark Cell selection
@@ -158,9 +191,10 @@
     //    NSLog(@"Height calculating for index path: %@", indexPath);
     CGFloat viewHeight = self.tableView.bounds.size.height;
     CGFloat viewWidth = self.tableView.bounds.size.width;
+    CGFloat dragHeight = self.dragUpView.bounds.size.height;
     
     if (self.activeCellIndexPath == nil) {
-        return ROUNDUPHALF(viewHeight / self.colorsArray.count);
+        return ROUNDUPHALF((viewHeight - dragHeight) / self.colorsArray.count);
     } else {
         CGFloat inactiveCellHeight = ROUNDUPHALF(0.2f * (viewHeight - viewWidth));
         
@@ -220,6 +254,14 @@
     [self updateButton];
 }
 
+#pragma mark - UIGestureRecognizer delegate methods
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    CGFloat y = [touch locationInView:self.view].y;
+    if (y > (self.view.frame.size.height - 24) && self.activeCellIndexPath == nil) return YES;
+    return NO;
+}
+
 
 #pragma mark - Private methods
 // Split out because deselectRowAtIndexPath: doesn't call didDeselectRowAtIndexPath
@@ -239,6 +281,17 @@
     
     if (brightness > 0.8f) return [UIColor blackColor];
     return [UIColor whiteColor];
+}
+
+- (void)setupDragUpView
+{
+    CGFloat viewWidth = self.view.bounds.size.width;
+    CGFloat viewHeight = self.view.bounds.size.height;
+    CGRect frame = CGRectMake(0, viewHeight, viewWidth, 0);
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    
+    [self.view addSubview:view];
+    self.dragUpView = view;
 }
 
 - (void)updateButton

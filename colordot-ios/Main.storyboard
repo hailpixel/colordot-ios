@@ -75,6 +75,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="UaU-lN-AhR" firstAttribute="top" secondItem="iCu-yn-rF9" secondAttribute="top" id="0ss-Fz-XK9"/>
                             <constraint firstAttribute="centerX" secondItem="fvT-MU-2vX" secondAttribute="centerX" id="4QL-6c-fPT"/>
@@ -83,14 +84,23 @@
                             <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="fvT-MU-2vX" secondAttribute="bottom" constant="10" id="eSn-KB-Txo"/>
                             <constraint firstAttribute="trailing" secondItem="UaU-lN-AhR" secondAttribute="trailing" id="gGZ-mT-l0X"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="krf-ch-pHX" appends="YES" id="t3E-Dh-K7P"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="76v-C2-NaT"/>
                     <connections>
+                        <outlet property="panRecognizer" destination="krf-ch-pHX" id="IkS-U2-mHI"/>
                         <outlet property="pullButton" destination="fvT-MU-2vX" id="GFq-QU-byp"/>
                         <outlet property="tableView" destination="UaU-lN-AhR" id="wgu-YI-5hy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygE-FS-iQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="krf-ch-pHX">
+                    <connections>
+                        <outlet property="delegate" destination="kqY-KP-x8X" id="w6I-Ts-Yv9"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-568" y="-321"/>
         </scene>
