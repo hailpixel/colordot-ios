@@ -116,25 +116,57 @@
     CGFloat y = [gestureRecognizer locationInView:self.view].y;
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        self.dragUpView.backgroundColor = [UIColor randomColor];
         [UIView setAnimationsEnabled:NO];
+
+        self.dragUpView.backgroundColor = [UIColor randomColor];
+        [self growDragUpViewByValue:42];
+        [self.view bringSubviewToFront:self.pullButton];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat yDelta = y - self.yLagged;
         
-        CGRect viewFrame = self.dragUpView.frame;
+        [self growDragUpViewByValue:-yDelta];
+        
         CGRect buttonFrame = self.pullButton.frame;
-        
-        viewFrame.origin.y += yDelta;
         buttonFrame.origin.y += yDelta;
-        viewFrame.size.height -= yDelta;
-        
-        [self.tableView beginUpdates];
-        self.dragUpView.frame = viewFrame;
-        [self.tableView endUpdates];
         self.pullButton.frame = buttonFrame;
-        
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [UIView setAnimationsEnabled:YES];
+        CGFloat height = self.dragUpView.frame.size.height;
+        self.pullButton.hidden = YES;
+        
+        if (height > ((3.0f / 8.0f) * self.view.bounds.size.height)) {
+            [UIView setAnimationsEnabled:YES];
+            
+            CGFloat viewHeight = self.view.bounds.size.height;
+            CGFloat viewWidth = self.view.bounds.size.width;
+            CGFloat newHeight = viewHeight - ((self.colorsArray.count) * ROUNDUPHALF(0.2f * (viewHeight - viewWidth)));
+                                              
+            [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [self growDragUpViewByValue:(newHeight - self.dragUpView.frame.size.height)];
+            } completion:^(BOOL finished) {
+                [UIView setAnimationsEnabled:NO];
+                
+                [self.tableView beginUpdates];
+                [self.colorsArray addObject:self.dragUpView.backgroundColor];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.colorsArray.count - 1) inSection:0];
+                [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+                [self.tableView endUpdates];
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                
+                [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+                [self growDragUpViewByValue:-newHeight];
+                
+                [UIView setAnimationsEnabled:YES];
+            }];
+        } else {
+            [UIView setAnimationsEnabled:YES];
+            [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [self growDragUpViewByValue:-height];
+            } completion:NULL];
+        }
+        
+        CGRect buttonFrame = self.pullButton.frame;
+        buttonFrame.origin.y += (height - 42);
+        self.pullButton.frame = buttonFrame;
     }
     
     self.yLagged = y;
@@ -258,7 +290,7 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     CGFloat y = [touch locationInView:self.view].y;
-    if (y > (self.view.frame.size.height - 24) && self.activeCellIndexPath == nil) return YES;
+    if (y > (self.view.frame.size.height - 42) && self.activeCellIndexPath == nil) return YES;
     return NO;
 }
 
@@ -300,6 +332,17 @@
     self.pullButton.tintColor = [newColor colorWithAlphaComponent:0.63f];
 }
 
+- (void)growDragUpViewByValue:(CGFloat)size
+{
+    CGRect frame = self.dragUpView.frame;
+    
+    frame.origin.y -= size;
+    frame.size.height += size;
+
+    [self.tableView beginUpdates];
+    self.dragUpView.frame = frame;
+    [self.tableView endUpdates];
+}
 
 /*
 #pragma mark - Navigation
