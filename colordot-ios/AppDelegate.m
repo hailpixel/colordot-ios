@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PaletteTableViewController.h"
+#import "PaletteViewController.h"
 
 @implementation AppDelegate
 
@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    PaletteTableViewController *controller = (PaletteTableViewController *)navigationController.topViewController;
+    PaletteViewController *controller = (PaletteViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
     
     return YES;

@@ -1,16 +1,16 @@
 //
-//  PaletteTableViewController.m
+//  PaletteViewController.m
 //  colordot-ios
 //
-//  Created by Colin on 6/20/14.
+//  Created by Colin on 6/27/14.
 //  Copyright (c) 2014 Devin Hunt. All rights reserved.
 //
 
-#import "PaletteTableViewController.h"
+#import "PaletteViewController.h"
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
 
-@interface PaletteTableViewController ()
+@interface PaletteViewController ()
 
 @property NSMutableArray *colorsArray;
 @property NSIndexPath *activeCellIndexPath;
@@ -20,11 +20,12 @@
 
 @end
 
-@implementation PaletteTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+@implementation PaletteViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -37,6 +38,7 @@
     
     self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
     self.activeCellIndexPath = nil;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,17 +114,24 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.activeCellIndexPath];
     [self configureCell:cell atIndexPath:self.activeCellIndexPath];
     
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        self.pullButton.hidden = NO;
+    }];
+    
     [self.tableView beginUpdates];
     [self.tableView deselectRowAtIndexPath:self.activeCellIndexPath animated:YES];
     [self dismissColorPicker];
     [self.tableView endUpdates];
+    
+    [CATransaction commit];
 }
 
 
 #pragma mark Table view delegate methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"Height calculating for index path: %@", indexPath);
+    //    NSLog(@"Height calculating for index path: %@", indexPath);
     CGFloat viewHeight = self.tableView.bounds.size.height;
     CGFloat viewWidth = self.tableView.bounds.size.width;
     
@@ -141,7 +150,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
+    //    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
+    self.pullButton.hidden = YES;
     
     if (!self.colorPickerController) {
         [CATransaction begin];
@@ -164,43 +174,17 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Private methods
+// Split out because deselectRowAtIndexPath: doesn't call didDeselectRowAtIndexPath
+- (void)dismissColorPicker
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    [self.colorPickerController.view removeFromSuperview];
+    [self.colorPickerController removeFromParentViewController];
+    
+    self.activeCellIndexPath = nil;
+    self.colorPickerController = nil;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation
@@ -212,18 +196,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-#pragma mark - Private methods
-// Split out because deselectRowAtIndexPath: doesn't call didDeselectRowAtIndexPath
-- (void)dismissColorPicker
-{
-//    [self.tableView reloadData];
-    
-    [self.colorPickerController.view removeFromSuperview];
-    [self.colorPickerController removeFromParentViewController];
-    
-    self.activeCellIndexPath = nil;
-    self.colorPickerController = nil;
-}
 
 @end
