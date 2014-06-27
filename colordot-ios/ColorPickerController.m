@@ -19,6 +19,7 @@
 
 - (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer;
+- (void)respondToTap;
 
 @end
 
@@ -41,6 +42,9 @@
     
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureUpdate:)];
     [self.pickerView addGestureRecognizer:pinchRecognizer];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTap)];
+    [self.pickerView addGestureRecognizer:tapRecognizer];
     
     self.view = self.pickerView;
 }
@@ -97,6 +101,11 @@
     
     cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
     cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
+}
+
+- (void)respondToTap
+{
+    [self.delegate colorPicked:self.pickerView.backgroundColor];
 }
 
 

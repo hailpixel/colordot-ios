@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "ColorPickerView.h"
 
+@protocol ColorPickerDelegate <NSObject>
+
+- (void)colorPicked:(UIColor *)color;
+
+@end
+
 @interface ColorPickerController : UIViewController
 
 @property (nonatomic, strong) ColorPickerView *pickerView;
+@property (nonatomic, weak) id <ColorPickerDelegate> delegate;
 
 @end

@@ -9,14 +9,13 @@
 #import "PaletteTableViewController.h"
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
-#import "ColorPickerController.h"
 
 @interface PaletteTableViewController ()
 
 @property NSMutableArray *colorsArray;
-@property NSUInteger colorCount;
 @property NSIndexPath *activeCellIndexPath;
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell;
 
 @end
@@ -37,7 +36,6 @@
     [super viewDidLoad];
     
     self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
-    self.colorCount = self.colorsArray.count;
     self.activeCellIndexPath = nil;
 }
 
@@ -59,13 +57,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 6;
+    return self.colorsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
     NSUInteger index = [indexPath indexAtPosition:1];
     cell.backgroundColor = self.colorsArray[index];
     cell.textLabel.text = [cell.backgroundColor cho_hexString];
@@ -73,11 +78,8 @@
     CGFloat brightness = 0.0f;
     [cell.backgroundColor getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
     
-    
     if (brightness > 0.8f) cell.textLabel.textColor = [UIColor blackColor];
     else cell.textLabel.textColor = [UIColor whiteColor];
-    
-    return cell;
 }
 
 
@@ -92,16 +94,32 @@
     
     self.colorPickerController.view.frame = colorPickerViewFrame;
     
-    
     self.colorPickerController.pickerView.backgroundColor = cell.backgroundColor;
     self.colorPickerController.pickerView.hexLabel.text = [cell.backgroundColor cho_hexString];
+    self.colorPickerController.delegate = self;
     
     [self addChildViewController:self.colorPickerController];
     [cell.contentView addSubview:self.colorPickerController.view];
 }
 
 
-#pragma mark - Table view delegate methods
+#pragma mark Color Picker delegate methods
+- (void)colorPicked:(UIColor *)color
+{
+    NSUInteger index = [self.activeCellIndexPath indexAtPosition:1];
+    [self.colorsArray replaceObjectAtIndex:index withObject:color];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.activeCellIndexPath];
+    [self configureCell:cell atIndexPath:self.activeCellIndexPath];
+    
+    [self.tableView beginUpdates];
+    [self.tableView deselectRowAtIndexPath:self.activeCellIndexPath animated:YES];
+    [self dismissColorPicker];
+    [self.tableView endUpdates];
+}
+
+
+#pragma mark Table view delegate methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSLog(@"Height calculating for index path: %@", indexPath);
@@ -109,12 +127,12 @@
     CGFloat viewWidth = self.tableView.bounds.size.width;
     
     if (self.activeCellIndexPath == nil) {
-        return (viewHeight / self.colorCount);
+        return (viewHeight / self.colorsArray.count);
     } else {
         CGFloat inactiveCellHeight = 0.2f * (viewHeight - viewWidth);
         
         if ([indexPath isEqual:self.activeCellIndexPath]) {
-            return viewHeight - ((self.colorCount - 1) * inactiveCellHeight);
+            return viewHeight - ((self.colorsArray.count - 1) * inactiveCellHeight);
         } else {
             return inactiveCellHeight;
         }
@@ -142,16 +160,9 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger index = [self.activeCellIndexPath indexAtPosition:1];
-    [self.colorsArray replaceObjectAtIndex:index withObject:self.colorPickerController.pickerView.backgroundColor];
-    [self.tableView reloadData];
-    
-    [self.colorPickerController.view removeFromSuperview];
-    [self.colorPickerController removeFromParentViewController];
-    
-    self.activeCellIndexPath = nil;
-    self.colorPickerController = nil;
+    [self dismissColorPicker];
 }
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -201,5 +212,18 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Private methods
+// Split out because deselectRowAtIndexPath: doesn't call didDeselectRowAtIndexPath
+- (void)dismissColorPicker
+{
+//    [self.tableView reloadData];
+    
+    [self.colorPickerController.view removeFromSuperview];
+    [self.colorPickerController removeFromParentViewController];
+    
+    self.activeCellIndexPath = nil;
+    self.colorPickerController = nil;
+}
 
 @end
