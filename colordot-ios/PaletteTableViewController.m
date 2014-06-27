@@ -86,7 +86,7 @@
 - (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell
 {
     CGRect cellBounds = cell.contentView.bounds;
-    CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.width);
+    CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.height);
     
     self.colorPickerController = [[ColorPickerController alloc] init];
     
@@ -111,10 +111,12 @@
     if (self.activeCellIndexPath == nil) {
         return (viewHeight / self.colorCount);
     } else {
+        CGFloat inactiveCellHeight = 0.2f * (viewHeight - viewWidth);
+        
         if ([indexPath isEqual:self.activeCellIndexPath]) {
-            return viewWidth;
+            return viewHeight - ((self.colorCount - 1) * inactiveCellHeight);
         } else {
-            return (viewHeight - viewWidth) / (self.colorCount - 1);
+            return inactiveCellHeight;
         }
     }
 }
