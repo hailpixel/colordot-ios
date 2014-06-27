@@ -7,8 +7,10 @@
 //
 
 #import "PaletteViewController.h"
+
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
+#import "UIColor+Random.h"
 
 @interface PaletteViewController ()
 
@@ -36,9 +38,9 @@
 {
     [super viewDidLoad];
     
-    self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
+    self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor]]];
     self.activeCellIndexPath = nil;
-
+    [self updateButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,12 +78,24 @@
     NSUInteger index = [indexPath indexAtPosition:1];
     cell.backgroundColor = self.colorsArray[index];
     cell.textLabel.text = [cell.backgroundColor cho_hexString];
+    cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
+}
+
+#pragma mark - Add/Remove methods
+- (void)pullButtonAction:(id)sender
+{
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self updateButton];
+    }];
     
-    CGFloat brightness = 0.0f;
-    [cell.backgroundColor getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    [self.tableView beginUpdates];
+    [self.colorsArray addObject:[UIColor randomColor]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.colorsArray.count - 1) inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.tableView endUpdates];
     
-    if (brightness > 0.8f) cell.textLabel.textColor = [UIColor blackColor];
-    else cell.textLabel.textColor = [UIColor whiteColor];
+    [CATransaction commit];
 }
 
 
@@ -117,6 +131,7 @@
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
         self.pullButton.hidden = NO;
+        [self updateButton];
     }];
     
     [self.tableView beginUpdates];
@@ -183,6 +198,20 @@
     
     self.activeCellIndexPath = nil;
     self.colorPickerController = nil;
+}
+
+- (UIColor *)whiteOrBlackWithColor:(UIColor *)color
+{
+    CGFloat brightness = 0.0f;
+    [color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    
+    if (brightness > 0.8f) return [UIColor blackColor];
+    return [UIColor whiteColor];
+}
+
+- (void)updateButton
+{
+    self.pullButton.tintColor = [self whiteOrBlackWithColor:[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)]];
 }
 
 

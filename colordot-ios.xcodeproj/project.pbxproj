@@ -24,6 +24,7 @@
 		0311D360195454C5008369C0 /* colordot_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D35F195454C5008369C0 /* colordot_iosTests.m */; };
 		03636E36195A253D00F05395 /* ColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03636E35195A253D00F05395 /* ColorPickerController.m */; };
 		3B1B3B1A195D9ABA0095DCFF /* PaletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1B3B19195D9ABA0095DCFF /* PaletteViewController.m */; };
+		3B1B3B20195DA4CC0095DCFF /* UIColor+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1B3B1F195DA4CC0095DCFF /* UIColor+Random.m */; };
 		3B4907BE19547997007A6EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4907BD19547997007A6EA6 /* Main.storyboard */; };
 		3B4EC3B919592FD500D8AF8D /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */; };
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
@@ -64,6 +65,8 @@
 		3B0739C01959BE8B00FF2FAF /* Constants.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.pch; sourceTree = "<group>"; };
 		3B1B3B18195D9ABA0095DCFF /* PaletteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteViewController.h; sourceTree = "<group>"; };
 		3B1B3B19195D9ABA0095DCFF /* PaletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteViewController.m; sourceTree = "<group>"; };
+		3B1B3B1E195DA4CC0095DCFF /* UIColor+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Random.h"; sourceTree = "<group>"; };
+		3B1B3B1F195DA4CC0095DCFF /* UIColor+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Random.m"; sourceTree = "<group>"; };
 		3B4907BD19547997007A6EA6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3B4EC3B719592FD500D8AF8D /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
 		3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				3BAC620119587672004D4B0D /* UIColor+Increments.m */,
 				3B4EC3B719592FD500D8AF8D /* UIColor+HexString.h */,
 				3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */,
+				3B1B3B1E195DA4CC0095DCFF /* UIColor+Random.h */,
+				3B1B3B1F195DA4CC0095DCFF /* UIColor+Random.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
 				3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */,
 				3B1B3B1A195D9ABA0095DCFF /* PaletteViewController.m in Sources */,
+				3B1B3B20195DA4CC0095DCFF /* UIColor+Random.m in Sources */,
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3BAC620219587672004D4B0D /* UIColor+Increments.m in Sources */,
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,

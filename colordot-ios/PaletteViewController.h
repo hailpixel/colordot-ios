@@ -18,4 +18,6 @@
 
 @property (strong, nonatomic) ColorPickerController *colorPickerController;
 
+- (IBAction)pullButtonAction:(id)sender;
+
 @end
