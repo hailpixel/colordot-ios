@@ -13,5 +13,6 @@
 #define BLACKHSB [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.0f alpha:1.0f]
 
 #define RANDUNIFORM ((float)arc4random_uniform(2^100))/(2^100)
+#define ROUNDUPHALF(a) round(2.0f * a + 1)/2.0f
 
 #endif

@@ -38,7 +38,7 @@
 {
     [super viewDidLoad];
     
-    self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor]]];
+    self.colorsArray = [NSMutableArray arrayWithArray:@[[UIColor cyanColor], [UIColor magentaColor], [UIColor yellowColor]]];
     self.activeCellIndexPath = nil;
     [self updateButton];
 }
@@ -83,11 +83,9 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.activeCellIndexPath == nil) return YES;
-    else return NO;
+    if (self.activeCellIndexPath != nil || self.colorsArray.count == 1) return NO;
+    else return YES;
 }
-
-
 
 
 #pragma mark - Add/Remove methods
@@ -160,9 +158,9 @@
     CGFloat viewWidth = self.tableView.bounds.size.width;
     
     if (self.activeCellIndexPath == nil) {
-        return (viewHeight / self.colorsArray.count);
+        return ROUNDUPHALF(viewHeight / self.colorsArray.count);
     } else {
-        CGFloat inactiveCellHeight = 0.2f * (viewHeight - viewWidth);
+        CGFloat inactiveCellHeight = ROUNDUPHALF(0.2f * (viewHeight - viewWidth));
         
         if ([indexPath isEqual:self.activeCellIndexPath]) {
             return viewHeight - ((self.colorsArray.count - 1) * inactiveCellHeight);
@@ -232,7 +230,8 @@
 
 - (void)updateButton
 {
-    self.pullButton.tintColor = [self whiteOrBlackWithColor:[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)]];
+    UIColor *newColor = [self whiteOrBlackWithColor:[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)]];
+    self.pullButton.tintColor = [newColor colorWithAlphaComponent:0.63f];
 }
 
 
