@@ -81,6 +81,15 @@
     cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.activeCellIndexPath == nil) return YES;
+    else return NO;
+}
+
+
+
+
 #pragma mark - Add/Remove methods
 - (void)pullButtonAction:(id)sender
 {
@@ -186,6 +195,18 @@
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self dismissColorPicker];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSUInteger index = [indexPath indexAtPosition:1];
+        [self.colorsArray removeObjectAtIndex:index];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
 }
 
 

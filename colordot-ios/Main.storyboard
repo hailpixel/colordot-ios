@@ -76,12 +76,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UaU-lN-AhR" firstAttribute="top" secondItem="iCu-yn-rF9" secondAttribute="top" id="BrN-SR-437"/>
-                            <constraint firstItem="UaU-lN-AhR" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leading" id="IMh-mS-Yba"/>
-                            <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="UaU-lN-AhR" secondAttribute="bottom" id="It6-x2-96j"/>
-                            <constraint firstAttribute="trailing" secondItem="UaU-lN-AhR" secondAttribute="trailing" id="KVG-pm-JT3"/>
-                            <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="fvT-MU-2vX" secondAttribute="bottom" constant="10" id="aKA-2t-kiU"/>
-                            <constraint firstAttribute="centerX" secondItem="fvT-MU-2vX" secondAttribute="centerX" id="bkC-bN-JdN"/>
+                            <constraint firstItem="UaU-lN-AhR" firstAttribute="top" secondItem="iCu-yn-rF9" secondAttribute="top" id="0ss-Fz-XK9"/>
+                            <constraint firstAttribute="centerX" secondItem="fvT-MU-2vX" secondAttribute="centerX" id="4QL-6c-fPT"/>
+                            <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="UaU-lN-AhR" secondAttribute="bottom" id="55Y-wi-PeE"/>
+                            <constraint firstItem="UaU-lN-AhR" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leading" id="Cdy-xM-icR"/>
+                            <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="fvT-MU-2vX" secondAttribute="bottom" constant="10" id="eSn-KB-Txo"/>
+                            <constraint firstAttribute="trailing" secondItem="UaU-lN-AhR" secondAttribute="trailing" id="gGZ-mT-l0X"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="76v-C2-NaT"/>
