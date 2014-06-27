@@ -91,18 +91,20 @@
 #pragma mark - Add/Remove methods
 - (void)pullButtonAction:(id)sender
 {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [self updateButton];
-    }];
-    
-    [self.tableView beginUpdates];
-    [self.colorsArray addObject:[UIColor randomColor]];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.colorsArray.count - 1) inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-    [self.tableView endUpdates];
-    
-    [CATransaction commit];
+    if (self.colorsArray.count < 6) {
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self updateButton];
+        }];
+        
+        [self.tableView beginUpdates];
+        [self.colorsArray addObject:[UIColor randomColor]];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.colorsArray.count - 1) inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.tableView endUpdates];
+        
+        [CATransaction commit];
+    }
 }
 
 
