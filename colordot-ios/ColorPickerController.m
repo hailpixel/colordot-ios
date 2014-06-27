@@ -62,6 +62,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.pickerView.hexLabel.center = self.view.center;
 }
 
