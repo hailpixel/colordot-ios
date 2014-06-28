@@ -63,7 +63,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvT-MU-2vX">
-                                <rect key="frame" x="149" y="536" width="22" height="22"/>
+                                <rect key="frame" x="10" y="536" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal">
@@ -78,11 +78,12 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="UaU-lN-AhR" firstAttribute="top" secondItem="iCu-yn-rF9" secondAttribute="top" id="0ss-Fz-XK9"/>
-                            <constraint firstAttribute="centerX" secondItem="fvT-MU-2vX" secondAttribute="centerX" id="4QL-6c-fPT"/>
                             <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="UaU-lN-AhR" secondAttribute="bottom" id="55Y-wi-PeE"/>
                             <constraint firstItem="UaU-lN-AhR" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leading" id="Cdy-xM-icR"/>
+                            <constraint firstItem="fvT-MU-2vX" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leading" constant="10" id="VUH-vJ-fhR"/>
                             <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="fvT-MU-2vX" secondAttribute="bottom" constant="10" id="eSn-KB-Txo"/>
                             <constraint firstAttribute="trailing" secondItem="UaU-lN-AhR" secondAttribute="trailing" id="gGZ-mT-l0X"/>
+                            <constraint firstAttribute="trailing" secondItem="fvT-MU-2vX" secondAttribute="trailing" constant="288" id="mCs-ax-dVX"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="krf-ch-pHX" appends="YES" id="t3E-Dh-K7P"/>

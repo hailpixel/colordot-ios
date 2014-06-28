@@ -161,7 +161,9 @@
             [UIView setAnimationsEnabled:YES];
             [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 [self growDragUpViewByValue:-height];
-            } completion:NULL];
+            } completion:^(BOOL finished) {
+                self.pullButton.hidden = NO;
+            }];
         }
         
         CGRect buttonFrame = self.pullButton.frame;
@@ -210,7 +212,7 @@
     
     [self.tableView beginUpdates];
     [self.tableView deselectRowAtIndexPath:self.activeCellIndexPath animated:YES];
-    [self dismissColorPicker];
+    [self tableView:self.tableView didDeselectRowAtIndexPath:self.activeCellIndexPath];
     [self.tableView endUpdates];
     
     [CATransaction commit];
@@ -260,7 +262,11 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self dismissColorPicker];
+    [self.colorPickerController.view removeFromSuperview];
+    [self.colorPickerController removeFromParentViewController];
+    
+    self.activeCellIndexPath = nil;
+    self.colorPickerController = nil;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -296,16 +302,6 @@
 
 
 #pragma mark - Private methods
-// Split out because deselectRowAtIndexPath: doesn't call didDeselectRowAtIndexPath
-- (void)dismissColorPicker
-{
-    [self.colorPickerController.view removeFromSuperview];
-    [self.colorPickerController removeFromParentViewController];
-    
-    self.activeCellIndexPath = nil;
-    self.colorPickerController = nil;
-}
-
 - (UIColor *)whiteOrBlackWithColor:(UIColor *)color
 {
     CGFloat brightness = 0.0f;
