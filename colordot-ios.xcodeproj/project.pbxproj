@@ -29,6 +29,7 @@
 		3B4EC3B919592FD500D8AF8D /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */; };
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
 		3BAC620219587672004D4B0D /* UIColor+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAC620119587672004D4B0D /* UIColor+Increments.m */; };
+		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerView.m; sourceTree = "<group>"; };
 		3BAC620019587672004D4B0D /* UIColor+Increments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Increments.h"; sourceTree = "<group>"; };
 		3BAC620119587672004D4B0D /* UIColor+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Increments.m"; sourceTree = "<group>"; };
+		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
+		3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteVCGestureHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +198,8 @@
 			children = (
 				3B1B3B18195D9ABA0095DCFF /* PaletteViewController.h */,
 				3B1B3B19195D9ABA0095DCFF /* PaletteViewController.m */,
+				3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */,
+				3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */,
 			);
 			name = Palette;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,
 				3B4EC3B919592FD500D8AF8D /* UIColor+HexString.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
+				3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

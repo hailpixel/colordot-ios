@@ -97,11 +97,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygE-FS-iQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="krf-ch-pHX">
-                    <connections>
-                        <outlet property="delegate" destination="kqY-KP-x8X" id="w6I-Ts-Yv9"/>
-                    </connections>
-                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="krf-ch-pHX"/>
             </objects>
             <point key="canvasLocation" x="-568" y="-321"/>
         </scene>
