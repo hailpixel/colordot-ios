@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class ColorPickerView, CameraPickerView;
+@class ColorPickerView, CameraPickerView, SlidingView;
 
-@interface ColorPickerController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface ColorPickerController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, UIGestureRecognizerDelegate> {
     AVCaptureSession *cameraSession;
     AVCaptureVideoPreviewLayer *previewLayer;
 }
 
+@property (nonatomic, strong) SlidingView *containerView;
 @property (nonatomic, strong) ColorPickerView *pickerView;
 @property (nonatomic, strong) CameraPickerView *cameraView;
 

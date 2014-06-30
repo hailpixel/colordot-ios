@@ -24,6 +24,7 @@
 		0311D360195454C5008369C0 /* colordot_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D35F195454C5008369C0 /* colordot_iosTests.m */; };
 		035C7DEA195B2DCC0048F1E6 /* CameraPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035C7DE9195B2DCC0048F1E6 /* CameraPickerView.m */; };
 		03636E36195A253D00F05395 /* ColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03636E35195A253D00F05395 /* ColorPickerController.m */; };
+		0388945619620C43007920CC /* SlidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0388945519620C43007920CC /* SlidingView.m */; };
 		03C1829D195D9B0500551C2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C1829C195D9B0500551C2F /* AVFoundation.framework */; };
 		03C1829F195D9B6400551C2F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C1829E195D9B6400551C2F /* CoreVideo.framework */; };
 		03C182A1195D9B6B00551C2F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C182A0195D9B6B00551C2F /* CoreMedia.framework */; };
@@ -67,6 +68,8 @@
 		035C7DE9195B2DCC0048F1E6 /* CameraPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraPickerView.m; sourceTree = "<group>"; };
 		03636E34195A253D00F05395 /* ColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerController.h; sourceTree = "<group>"; };
 		03636E35195A253D00F05395 /* ColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerController.m; sourceTree = "<group>"; };
+		0388945419620C43007920CC /* SlidingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingView.h; sourceTree = "<group>"; };
+		0388945519620C43007920CC /* SlidingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingView.m; sourceTree = "<group>"; };
 		03C1829C195D9B0500551C2F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		03C1829E195D9B6400551C2F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		03C182A0195D9B6B00551C2F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -148,6 +151,7 @@
 		0311D33C195454C5008369C0 /* colordot-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0388945719620EAA007920CC /* SlidingView */,
 				03636E33195A251900F05395 /* Color Picker */,
 				3BAC62031958767C004D4B0D /* Categories */,
 				3B4EC3BA1959309800D8AF8D /* Palette Table VC */,
@@ -202,6 +206,15 @@
 				03636E35195A253D00F05395 /* ColorPickerController.m */,
 			);
 			name = "Color Picker";
+			sourceTree = "<group>";
+		};
+		0388945719620EAA007920CC /* SlidingView */ = {
+			isa = PBXGroup;
+			children = (
+				0388945419620C43007920CC /* SlidingView.h */,
+				0388945519620C43007920CC /* SlidingView.m */,
+			);
+			name = SlidingView;
 			sourceTree = "<group>";
 		};
 		3B4EC3BA1959309800D8AF8D /* Palette Table VC */ = {
@@ -323,6 +336,7 @@
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
 				3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */,
 				3BAC61FF19583492004D4B0D /* PaletteTableViewController.m in Sources */,
+				0388945619620C43007920CC /* SlidingView.m in Sources */,
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3BAC620219587672004D4B0D /* UIColor+Increments.m in Sources */,
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,

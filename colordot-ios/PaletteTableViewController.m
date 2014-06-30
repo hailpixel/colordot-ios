@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     
-    self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor], [UIColor yellowColor], [UIColor brownColor]]];
+    self.colorsArray = [NSMutableArray arrayWithArray:@[WHITEHSB, [UIColor cyanColor], [UIColor orangeColor], [UIColor magentaColor]]];
     self.colorCount = self.colorsArray.count;
     self.activeCellIndexPath = nil;
 }
@@ -92,7 +92,6 @@
     self.colorPickerController = [[ColorPickerController alloc] init];
     
     self.colorPickerController.view.frame = colorPickerViewFrame;
-    
     
     self.colorPickerController.pickerView.backgroundColor = cell.backgroundColor;
     self.colorPickerController.pickerView.hexLabel.text = [cell.backgroundColor cho_hexString];

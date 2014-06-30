@@ -9,6 +9,7 @@
 #import "ColorPickerController.h"
 #import "ColorPickerView.h"
 #import "CameraPickerView.h"
+#import "SlidingView.h"
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
 
@@ -41,17 +42,22 @@
     self.pickerView = [[ColorPickerView alloc] init];
     
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureUpdate:)];
+    panRecognizer.delegate = self;
     [self.pickerView addGestureRecognizer:panRecognizer];
     
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureUpdate:)];
     [self.pickerView addGestureRecognizer:pinchRecognizer];
     
-    
     self.cameraView = [[CameraPickerView alloc] init];
     
-    self.view = self.cameraView;
-    [self initializeCamera];
-    [cameraSession startRunning];
+    self.containerView = [[SlidingView alloc] init];
+    self.view = self.containerView;
+    self.containerView.centerView = self.pickerView;
+    self.containerView.rightView = self.cameraView;
+    
+    // TODO initialize the camera only when needed
+    //[self initializeCamera];
+    //[cameraSession startRunning];
 }
 
 - (void)viewDidLoad
@@ -105,6 +111,16 @@
     
     cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
     cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    CGPoint point = [gestureRecognizer locationInView:self.pickerView];
+
+    if(point.x > 200.0f) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Camera methods
