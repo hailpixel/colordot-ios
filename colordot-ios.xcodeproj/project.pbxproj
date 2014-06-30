@@ -22,7 +22,11 @@
 		0311D356195454C5008369C0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0311D33A195454C5008369C0 /* CoreData.framework */; };
 		0311D35E195454C5008369C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0311D35C195454C5008369C0 /* InfoPlist.strings */; };
 		0311D360195454C5008369C0 /* colordot_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0311D35F195454C5008369C0 /* colordot_iosTests.m */; };
+		035C7DEA195B2DCC0048F1E6 /* CameraPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035C7DE9195B2DCC0048F1E6 /* CameraPickerView.m */; };
 		03636E36195A253D00F05395 /* ColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03636E35195A253D00F05395 /* ColorPickerController.m */; };
+		03C1829D195D9B0500551C2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C1829C195D9B0500551C2F /* AVFoundation.framework */; };
+		03C1829F195D9B6400551C2F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C1829E195D9B6400551C2F /* CoreVideo.framework */; };
+		03C182A1195D9B6B00551C2F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C182A0195D9B6B00551C2F /* CoreMedia.framework */; };
 		3B4907BE19547997007A6EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4907BD19547997007A6EA6 /* Main.storyboard */; };
 		3B4EC3B919592FD500D8AF8D /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */; };
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
@@ -59,8 +63,13 @@
 		0311D35B195454C5008369C0 /* colordot-iosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "colordot-iosTests-Info.plist"; sourceTree = "<group>"; };
 		0311D35D195454C5008369C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0311D35F195454C5008369C0 /* colordot_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = colordot_iosTests.m; sourceTree = "<group>"; };
+		035C7DE8195B2DCC0048F1E6 /* CameraPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraPickerView.h; sourceTree = "<group>"; };
+		035C7DE9195B2DCC0048F1E6 /* CameraPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraPickerView.m; sourceTree = "<group>"; };
 		03636E34195A253D00F05395 /* ColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerController.h; sourceTree = "<group>"; };
 		03636E35195A253D00F05395 /* ColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerController.m; sourceTree = "<group>"; };
+		03C1829C195D9B0500551C2F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		03C1829E195D9B6400551C2F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		03C182A0195D9B6B00551C2F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3B0739C01959BE8B00FF2FAF /* Constants.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.pch; sourceTree = "<group>"; };
 		3B4907BD19547997007A6EA6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3B4EC3B719592FD500D8AF8D /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
@@ -78,6 +87,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03C182A1195D9B6B00551C2F /* CoreMedia.framework in Frameworks */,
+				03C1829F195D9B6400551C2F /* CoreVideo.framework in Frameworks */,
+				03C1829D195D9B0500551C2F /* AVFoundation.framework in Frameworks */,
 				0311D337195454C5008369C0 /* CoreGraphics.framework in Frameworks */,
 				0311D33B195454C5008369C0 /* CoreData.framework in Frameworks */,
 				0311D339195454C5008369C0 /* UIKit.framework in Frameworks */,
@@ -121,6 +133,9 @@
 		0311D333195454C5008369C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03C182A0195D9B6B00551C2F /* CoreMedia.framework */,
+				03C1829E195D9B6400551C2F /* CoreVideo.framework */,
+				03C1829C195D9B0500551C2F /* AVFoundation.framework */,
 				0311D334195454C5008369C0 /* Foundation.framework */,
 				0311D336195454C5008369C0 /* CoreGraphics.framework */,
 				0311D338195454C5008369C0 /* UIKit.framework */,
@@ -179,6 +194,8 @@
 		03636E33195A251900F05395 /* Color Picker */ = {
 			isa = PBXGroup;
 			children = (
+				035C7DE8195B2DCC0048F1E6 /* CameraPickerView.h */,
+				035C7DE9195B2DCC0048F1E6 /* CameraPickerView.m */,
 				3B4EC3BB195932E000D8AF8D /* ColorPickerView.h */,
 				3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */,
 				03636E34195A253D00F05395 /* ColorPickerController.h */,
@@ -309,6 +326,7 @@
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3BAC620219587672004D4B0D /* UIColor+Increments.m in Sources */,
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,
+				035C7DEA195B2DCC0048F1E6 /* CameraPickerView.m in Sources */,
 				3B4EC3B919592FD500D8AF8D /* UIColor+HexString.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
 			);

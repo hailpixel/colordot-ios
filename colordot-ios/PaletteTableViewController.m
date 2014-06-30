@@ -10,6 +10,7 @@
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
 #import "ColorPickerController.h"
+#import "ColorPickerView.h"
 
 @interface PaletteTableViewController ()
 

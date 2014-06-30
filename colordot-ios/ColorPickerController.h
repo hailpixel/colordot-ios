@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ColorPickerView.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface ColorPickerController : UIViewController
+@class ColorPickerView, CameraPickerView;
+
+@interface ColorPickerController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
+    AVCaptureSession *cameraSession;
+    AVCaptureVideoPreviewLayer *previewLayer;
+}
 
 @property (nonatomic, strong) ColorPickerView *pickerView;
+@property (nonatomic, strong) CameraPickerView *cameraView;
 
 @end

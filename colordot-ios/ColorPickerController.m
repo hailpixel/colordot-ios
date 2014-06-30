@@ -7,6 +7,8 @@
 //
 
 #import "ColorPickerController.h"
+#import "ColorPickerView.h"
+#import "CameraPickerView.h"
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
 
@@ -19,6 +21,8 @@
 
 - (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)pinchGestureUpdate:(UIPinchGestureRecognizer *)gestureRecognizer;
+
+- (void)initializeCamera;
 
 @end
 
@@ -42,7 +46,12 @@
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureUpdate:)];
     [self.pickerView addGestureRecognizer:pinchRecognizer];
     
-    self.view = self.pickerView;
+    
+    self.cameraView = [[CameraPickerView alloc] init];
+    
+    self.view = self.cameraView;
+    [self initializeCamera];
+    [cameraSession startRunning];
 }
 
 - (void)viewDidLoad
@@ -97,6 +106,38 @@
     cpv.backgroundColor = [cpv.backgroundColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
     cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
 }
+
+#pragma mark - Camera methods
+- (void)initializeCamera {
+    cameraSession = [[AVCaptureSession alloc] init];
+    cameraSession.sessionPreset = AVCaptureSessionPresetPhoto;
+    
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    NSError *error;
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+    
+    if(!input) {
+        NSLog(@"Error grabbing input device");
+    }
+    
+    [cameraSession addInput:input];
+    
+    previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:cameraSession];
+    self.cameraView.previewLayer = previewLayer;
+    
+    // Setup the sample buffer output
+    AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
+    output.alwaysDiscardsLateVideoFrames = YES;
+    output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+    [output setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+    [cameraSession addOutput:output];
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    
+}
+
+
 
 
 /*
