@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ColorPickerView.h"
+#import <AVFoundation/AVFoundation.h>
+
+@class SlidingView, ColorPickerView, CameraPickerView;
 
 @protocol ColorPickerDelegate <NSObject>
 
@@ -15,9 +17,14 @@
 
 @end
 
-@interface ColorPickerController : UIViewController
+@interface ColorPickerController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, UIGestureRecognizerDelegate> {
+    AVCaptureSession *cameraSession;
+    AVCaptureVideoPreviewLayer *previewLayer;
+}
 
+@property (nonatomic, strong) SlidingView *containerView;
 @property (nonatomic, strong) ColorPickerView *pickerView;
+@property (nonatomic, strong) CameraPickerView *cameraView;
 @property (nonatomic, weak) id <ColorPickerDelegate> delegate;
 
 @end

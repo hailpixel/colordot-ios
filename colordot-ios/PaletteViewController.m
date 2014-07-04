@@ -8,6 +8,7 @@
 
 #import "PaletteViewController.h"
 #import "PaletteVCGestureHandler.h"
+#import "ColorPickerView.h"
 
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
