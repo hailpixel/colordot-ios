@@ -14,18 +14,31 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self initializeInterface];
     }
     return self;
 }
 
+- (void)initializeInterface {
+    UIButton *pickerButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [self addSubview:pickerButton];
+    self.pickerButton = pickerButton;
+    
+    [self layoutInterface];
+}
+
+- (void)layoutInterface {
+    self.pickerButton.center = CGPointMake(20.0f, self.center.y);
+}
+
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    NSLog(@"%@", NSStringFromCGRect(frame));
     if(self.previewLayer) {
         self.previewLayer.frame = self.bounds;
         [self setCameraMask];
     }
+    
+    [self layoutInterface];
 }
 
 - (void)setPreviewLayer:(AVCaptureVideoPreviewLayer *)previewLayer {
@@ -55,15 +68,5 @@
     mask.fillColor = [UIColor whiteColor].CGColor;
     self.previewLayer.mask = mask;
 }
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

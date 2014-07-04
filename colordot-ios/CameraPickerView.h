@@ -15,4 +15,6 @@
 
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer *previewLayer;
 
+@property (weak, nonatomic) UIButton *pickerButton;
+
 @end

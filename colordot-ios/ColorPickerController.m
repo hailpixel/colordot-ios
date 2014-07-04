@@ -40,6 +40,7 @@
 
 - (void)loadView {
     self.pickerView = [[ColorPickerView alloc] init];
+    [self.pickerView.cameraButton addTarget:self action:@selector(onCameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
     
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureUpdate:)];
     panRecognizer.delegate = self;
@@ -49,15 +50,16 @@
     [self.pickerView addGestureRecognizer:pinchRecognizer];
     
     self.cameraView = [[CameraPickerView alloc] init];
+    [self.cameraView.pickerButton addTarget:self action:@selector(onPickerButtonTap) forControlEvents:UIControlEventTouchUpInside];
     
     self.containerView = [[SlidingView alloc] init];
     self.view = self.containerView;
     self.containerView.centerView = self.pickerView;
     self.containerView.rightView = self.cameraView;
-    
+
     // TODO initialize the camera only when needed
-    //[self initializeCamera];
-    //[cameraSession startRunning];
+    [self initializeCamera];
+    [cameraSession startRunning];
 }
 
 - (void)viewDidLoad
@@ -74,10 +76,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-    self.pickerView.hexLabel.center = self.view.center;
 }
 
 #pragma mark - Gesture Handling
@@ -116,11 +114,23 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView:self.pickerView];
 
-    if(point.x > 200.0f) {
+    if(self.containerView.state == SlidingViewDefault && point.x > 200.0f) {
+        return NO;
+    }
+    
+    if(self.containerView.state == SlidingViewRight && point.x < 100.0f) {
         return NO;
     }
     
     return YES;
+}
+
+- (void)onCameraButtonTap {
+    self.containerView.state = SlidingViewRight;
+}
+
+- (void)onPickerButtonTap {
+    self.containerView.state = SlidingViewDefault;
 }
 
 #pragma mark - Camera methods
@@ -150,7 +160,7 @@
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    
+    NSLog(@"yepyepyep");
 }
 
 

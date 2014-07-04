@@ -14,14 +14,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self hexLabelSetup];
+        [self interfaceSetup];
     }
     return self;
 }
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self layoutInterface];
+}
 
 #pragma mark - Private methods
-- (void)hexLabelSetup
+- (void)interfaceSetup
 {
     CGFloat inset = (self.bounds.size.width / 2.0f) - 50.0f;
     UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 100.0f, 100.0f)];
@@ -36,6 +40,19 @@
     
     [self addSubview:hexLabel];
     self.hexLabel = hexLabel;
+    
+    UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    
+    [self addSubview:cameraButton];
+    self.cameraButton = cameraButton;
+    
+    [self layoutInterface];
+}
+
+- (void)layoutInterface
+{
+    self.hexLabel.center = self.center;
+    self.cameraButton.center = CGPointMake(self.bounds.size.width - 20.0f, self.center.y);
 }
 
 @end

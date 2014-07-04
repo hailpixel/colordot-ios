@@ -11,5 +11,6 @@
 @interface ColorPickerView : UIView
 
 @property (weak, nonatomic) UILabel *hexLabel;
+@property (weak, nonatomic) UIButton *cameraButton;
 
 @end

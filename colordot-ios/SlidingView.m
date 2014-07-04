@@ -59,11 +59,7 @@
         
         offset = MAX(MIN(offset, 0), -self.bounds.size.width);
         
-        NSLog(@"%f", offset);
-        
-        CGAffineTransform transform = CGAffineTransformMakeTranslation(offset, 0.0f);
-        self.centerView.transform = transform;
-        self.rightView.transform = transform;
+        [self setOffset:CGAffineTransformMakeTranslation(offset, 0.0f)];
         
     } else if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
         if(self.state == SlidingViewDefault && translation.x < -self.bounds.size.width * kSlidingThreshold) {
@@ -73,6 +69,11 @@
         }
     }
     
+}
+
+- (void)setOffset:(CGAffineTransform)transform {
+    self.centerView.transform = transform;
+    self.rightView.transform = transform;
 }
 
 #pragma mark Setters
