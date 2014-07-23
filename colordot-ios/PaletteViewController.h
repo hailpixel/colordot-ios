@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "ColorPickerController.h"
 
+@class Palette;
+
 @interface PaletteViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, ColorPickerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) Palette *palette;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *pullButton;
