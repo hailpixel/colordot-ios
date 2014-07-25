@@ -19,4 +19,7 @@
 @property (nonatomic, retain) NSNumber *order;
 @property (nonatomic, retain) Palette *palette;
 
+- (UIColor *)UIColor;
+- (void)randomValues;
+
 @end

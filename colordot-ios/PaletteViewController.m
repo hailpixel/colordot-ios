@@ -10,6 +10,9 @@
 #import "PaletteVCGestureHandler.h"
 #import "ColorPickerView.h"
 
+#import "Palette.h"
+#import "Color.h"
+
 #import "UIColor+Increments.h"
 #import "UIColor+HexString.h"
 #import "UIColor+Random.h"
@@ -44,7 +47,8 @@
 {
     [super viewDidLoad];
     
-    self.colorsArray = [NSMutableArray arrayWithArray:@[[UIColor cyanColor], [UIColor magentaColor], [UIColor yellowColor]]];
+    self.colorsArray = self.palette.colorsArray;
+    
     self.activeCellIndexPath = nil;
     self.gestureHandler = [[PaletteVCGestureHandler alloc] initWithPaletteVC:self];
     
@@ -66,13 +70,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return self.colorsArray.count;
 }
 
@@ -88,7 +90,7 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger index = [indexPath indexAtPosition:1];
-    cell.backgroundColor = self.colorsArray[index];
+    cell.backgroundColor = [self.colorsArray[index] UIColor];
     cell.textLabel.text = [cell.backgroundColor cho_hexString];
     cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
 }
@@ -110,7 +112,13 @@
         }];
         
         [self.tableView beginUpdates];
-        [self.colorsArray addObject:[UIColor randomColor]];
+        
+        Color *color = [NSEntityDescription insertNewObjectForEntityForName:@"Color" inManagedObjectContext:self.managedObjectContext];
+        [color randomValues];
+        color.order = [NSNumber numberWithUnsignedInteger:self.palette.colors.count];
+        [self.palette addColorsObject:color];
+        [self saveContext];
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.colorsArray.count - 1) inSection:0];
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
         [self.tableView endUpdates];
@@ -122,17 +130,21 @@
 
 #pragma mark - Color Picker Management
 #pragma mark Cell selection
-- (void)instantiateColorPickerViewForCell:(UITableViewCell *)cell
+- (void)instantiateColorPickerViewForIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect cellBounds = cell.contentView.bounds;
-    CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.height);
-    
     self.colorPickerController = [[ColorPickerController alloc] init];
     
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    CGRect cellBounds = cell.contentView.bounds;
+    CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.height);
     self.colorPickerController.view.frame = colorPickerViewFrame;
     
-    self.colorPickerController.pickerView.backgroundColor = cell.backgroundColor;
-    self.colorPickerController.pickerView.hexLabel.text = [cell.backgroundColor cho_hexString];
+    NSUInteger index = [indexPath indexAtPosition:1];
+    Color *selectedColor = self.colorsArray[index];
+    NSLog(@"Color values: %@, %@, %@", selectedColor.hue, selectedColor.saturation, selectedColor.brightness);
+
+    self.colorPickerController.activeColor = self.colorsArray[index];
+    
     self.colorPickerController.delegate = self;
     
     [self addChildViewController:self.colorPickerController];
@@ -143,8 +155,7 @@
 #pragma mark Color Picker delegate methods
 - (void)colorPicked:(UIColor *)color
 {
-    NSUInteger index = [self.activeCellIndexPath indexAtPosition:1];
-    [self.colorsArray replaceObjectAtIndex:index withObject:color];
+    [self saveContext];
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.activeCellIndexPath];
     [self configureCell:cell atIndexPath:self.activeCellIndexPath];
@@ -193,8 +204,7 @@
     if (!self.colorPickerController) {
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            [self instantiateColorPickerViewForCell:cell];
+            [self instantiateColorPickerViewForIndexPath:indexPath];
         }];
         
         [self.tableView beginUpdates];
@@ -218,11 +228,11 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSUInteger index = [indexPath indexAtPosition:1];
-        [self.colorsArray removeObjectAtIndex:index];
+        [self.palette removeColorsObject:self.colorsArray[index]];
+        [self saveContext];
+        [self updateOrder];
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
 
@@ -239,6 +249,17 @@
 
 
 #pragma mark - Private methods
+- (void)saveContext
+{
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Unexpected error: %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    self.colorsArray = self.palette.colorsArray;
+}
+
 - (UIColor *)whiteOrBlackWithColor:(UIColor *)color
 {
     CGFloat brightness = 0.0f;
@@ -262,8 +283,8 @@
 
 - (void)updateButton
 {
-    UIColor *newColor = [self whiteOrBlackWithColor:[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)]];
-    self.pullButton.tintColor = [newColor colorWithAlphaComponent:0.63f];
+    UIColor *color = [self whiteOrBlackWithColor:[[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)] UIColor]];
+    self.pullButton.tintColor = [color colorWithAlphaComponent:0.63f];
 }
 
 - (void)growDragUpViewByValue:(CGFloat)size
@@ -276,6 +297,14 @@
     [self.tableView beginUpdates];
     self.dragUpView.frame = frame;
     [self.tableView endUpdates];
+}
+
+- (void)updateOrder
+{
+    for (Color *color in self.colorsArray) {
+        color.order = [NSNumber numberWithUnsignedInteger:[self.colorsArray indexOfObject:color]];
+        [self saveContext];
+    }
 }
 
 /*

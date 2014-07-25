@@ -168,9 +168,7 @@
     palette.created = [NSDate date];
     
     Color *color = [NSEntityDescription insertNewObjectForEntityForName:@"Color" inManagedObjectContext:self.managedObjectContext];
-    color.hue = @0.0;
-    color.saturation = @1.0;
-    color.brightness = @1.0;
+    [color randomValues];
     color.order = @0;
     
     [palette addColorsObject:color];

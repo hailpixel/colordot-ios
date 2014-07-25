@@ -15,6 +15,8 @@
 @property (nonatomic, retain) NSDate *created;
 @property (nonatomic, retain) NSSet *colors;
 
+- (NSArray *)colorsArray;
+
 @end
 
 @interface Palette (CoreDataGeneratedAccessors)

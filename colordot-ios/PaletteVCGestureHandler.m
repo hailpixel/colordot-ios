@@ -9,7 +9,8 @@
 #import "PaletteVCGestureHandler.h"
 #import "PaletteViewController.h"
 
-#import "UIColor+Random.h"
+#import "Palette.h"
+#import "Color.h"
 
 @interface PaletteVCGestureHandler ()
 
@@ -38,7 +39,18 @@
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [UIView setAnimationsEnabled:NO];
         
-        self.dragUpView.backgroundColor = [UIColor randomColor];
+        self.color = [NSEntityDescription insertNewObjectForEntityForName:@"Color" inManagedObjectContext:pvc.managedObjectContext];
+        [self.color randomValues];
+        self.color.order = [NSNumber numberWithUnsignedInteger:pvc.colorsArray.count];
+        
+        self.dragUpView.backgroundColor = self.color.UIColor;
+        
+        NSLog(@"Color values: %@, %@, %@", self.color.hue, self.color.saturation, self.color.brightness);
+        
+        CGFloat a = 0.0f, b = 0.0f, c = 0.0f;
+        [self.color.UIColor getHue:&a saturation:&b brightness:&c alpha:NULL];
+        NSLog(@"UIColor values: %f, %f, %f", a, b, c);
+        
         [pvc growDragUpViewByValue:42];
         [pvc.view bringSubviewToFront:pvc.pullButton];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
@@ -66,7 +78,15 @@
                 [UIView setAnimationsEnabled:NO];
                 
                 [self.tableView beginUpdates];
-                [pvc.colorsArray addObject:self.dragUpView.backgroundColor];
+                [pvc.palette addColorsObject:self.color];
+                
+                NSLog(@"Color values: %@, %@, %@", self.color.hue, self.color.saturation, self.color.brightness);
+                
+                CGFloat a = 0.0f, b = 0.0f, c = 0.0f;
+                [self.color.UIColor getHue:&a saturation:&b brightness:&c alpha:NULL];
+                NSLog(@"UIColor values: %f, %f, %f", a, b, c);
+                
+                [pvc saveContext];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(pvc.colorsArray.count - 1) inSection:0];
                 [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
                 [self.tableView endUpdates];

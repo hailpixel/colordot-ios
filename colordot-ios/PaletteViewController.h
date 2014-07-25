@@ -21,10 +21,11 @@
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panRecognizer;
 
 @property (strong, nonatomic) ColorPickerController *colorPickerController;
-@property NSMutableArray *colorsArray;
-@property NSIndexPath *activeCellIndexPath;
+@property (strong, nonatomic) NSArray *colorsArray;
+@property (strong, nonatomic) NSIndexPath *activeCellIndexPath;
 
 - (IBAction)pullButtonAction:(id)sender;
 - (void)growDragUpViewByValue:(CGFloat)size;
+- (void)saveContext;
 
 @end

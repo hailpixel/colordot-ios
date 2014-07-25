@@ -100,11 +100,11 @@
                         <viewControllerLayoutGuide type="bottom" id="0VA-pj-aH6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iCu-yn-rF9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="320" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UaU-lN-AhR">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -132,7 +132,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvT-MU-2vX">
-                                <rect key="frame" x="10" y="536" width="22" height="22"/>
+                                <rect key="frame" x="10" y="472" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal">
@@ -158,8 +158,10 @@
                             <outletCollection property="gestureRecognizers" destination="krf-ch-pHX" appends="YES" id="t3E-Dh-K7P"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="76v-C2-NaT"/>
-                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationItem key="navigationItem" id="76v-C2-NaT">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="fY7-lI-45F"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="panRecognizer" destination="krf-ch-pHX" id="IkS-U2-mHI"/>
                         <outlet property="pullButton" destination="fvT-MU-2vX" id="GFq-QU-byp"/>

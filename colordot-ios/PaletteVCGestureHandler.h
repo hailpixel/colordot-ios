@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class PaletteViewController;
+@class PaletteViewController, Color;
 
 @interface PaletteVCGestureHandler : NSObject <UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) PaletteViewController *paletteVC;
 @property (strong, nonatomic) UIView *dragUpView;
 @property (weak, nonatomic) UITableView *tableView;
+
+@property (strong, nonatomic) Color *color;
 
 - (PaletteVCGestureHandler *)initWithPaletteVC:(PaletteViewController *)paletteVC;
 

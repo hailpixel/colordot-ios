@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class SlidingView, ColorPickerView, CameraPickerView;
+@class SlidingView, ColorPickerView, CameraPickerView, Color;
 
 @protocol ColorPickerDelegate <NSObject>
 
@@ -26,5 +26,7 @@
 @property (nonatomic, strong) ColorPickerView *pickerView;
 @property (nonatomic, strong) CameraPickerView *cameraView;
 @property (nonatomic, weak) id <ColorPickerDelegate> delegate;
+
+@property (weak, nonatomic) Color *activeColor;
 
 @end

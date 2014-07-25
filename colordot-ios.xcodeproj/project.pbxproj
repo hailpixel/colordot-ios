@@ -35,6 +35,7 @@
 		3B4907BE19547997007A6EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4907BD19547997007A6EA6 /* Main.storyboard */; };
 		3B4EC3B919592FD500D8AF8D /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */; };
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
+		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
 		3BAC620219587672004D4B0D /* UIColor+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAC620119587672004D4B0D /* UIColor+Increments.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 		3BED71001978310200829417 /* PalettePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BED70FF1978310200829417 /* PalettePickerViewController.m */; };
@@ -92,6 +93,8 @@
 		3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		3B4EC3BB195932E000D8AF8D /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerView.m; sourceTree = "<group>"; };
+		3B5B6005198270C000B6826D /* Color+Increments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Color+Increments.h"; sourceTree = "<group>"; };
+		3B5B6006198270C000B6826D /* Color+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Color+Increments.m"; sourceTree = "<group>"; };
 		3BAC620019587672004D4B0D /* UIColor+Increments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Increments.h"; sourceTree = "<group>"; };
 		3BAC620119587672004D4B0D /* UIColor+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Increments.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
@@ -270,6 +273,8 @@
 			children = (
 				3BAC620019587672004D4B0D /* UIColor+Increments.h */,
 				3BAC620119587672004D4B0D /* UIColor+Increments.m */,
+				3B5B6005198270C000B6826D /* Color+Increments.h */,
+				3B5B6006198270C000B6826D /* Color+Increments.m */,
 				3B4EC3B719592FD500D8AF8D /* UIColor+HexString.h */,
 				3B4EC3B819592FD500D8AF8D /* UIColor+HexString.m */,
 				3B1B3B1E195DA4CC0095DCFF /* UIColor+Random.h */,
@@ -389,6 +394,7 @@
 				3B3BE028197903D300B9A222 /* Color.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
 				3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */,
+				3B5B6007198270C000B6826D /* Color+Increments.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

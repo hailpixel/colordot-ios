@@ -7,10 +7,24 @@
 //
 
 #import "Palette.h"
+#import "Color.h"
 
 @implementation Palette
 
 @dynamic created;
 @dynamic colors;
+
+- (NSArray *)colorsArray
+{
+    NSSortDescriptor *colorsSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+    NSArray *colorsArray = [self.colors sortedArrayUsingDescriptors:@[colorsSortDescriptor]];
+    
+//    NSMutableArray *UIColorsArray = [[NSMutableArray alloc] init];
+//    for (Color *color in colorsArray) {
+//        [UIColorsArray addObject:color.UIColor];
+//    }
+    
+    return colorsArray;
+}
 
 @end
