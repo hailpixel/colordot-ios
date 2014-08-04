@@ -13,10 +13,6 @@
 #import "Palette.h"
 #import "Color.h"
 
-#import "UIColor+Increments.h"
-#import "UIColor+HexString.h"
-#import "UIColor+Random.h"
-
 @interface PaletteViewController ()
 
 @property (strong, nonatomic) PaletteVCGestureHandler *gestureHandler;
@@ -90,8 +86,9 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger index = [indexPath indexAtPosition:1];
-    cell.backgroundColor = [self.colorsArray[index] UIColor];
-    cell.textLabel.text = [cell.backgroundColor cho_hexString];
+    Color *cellColor = self.colorsArray[index];
+    cell.backgroundColor = [cellColor UIColor];
+    cell.textLabel.text = cellColor.hexString;
     cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
 }
 

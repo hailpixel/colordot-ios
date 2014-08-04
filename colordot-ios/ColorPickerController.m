@@ -13,7 +13,6 @@
 
 #import "Color.h"
 #import "Color+Increments.h"
-#import "UIColor+HexString.h"
 
 @interface ColorPickerController ()
 
@@ -87,7 +86,7 @@
     [super viewDidLoad];
     
     self.pickerView.backgroundColor = self.activeColor.UIColor;
-    self.pickerView.hexLabel.text = [self.pickerView.backgroundColor cho_hexString];
+    self.pickerView.hexLabel.text = self.activeColor.hexString;
     
     self.xLagged = 0.0f;
     self.yLagged = 0.0f;
@@ -114,7 +113,7 @@
     // Update hue and brightness according to past delta values because gestureRecognizer fires on a gesture's ending
     [self.activeColor cho_colorWithChangeToHue:(self.xDelta/1000) saturation:0.0f brightness:-(self.yDelta/1000)];
     cpv.backgroundColor = [self.activeColor UIColor];
-    cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
+    cpv.hexLabel.text = self.activeColor.hexString;
     
     // Calculate the delta if the gesture is still occurring, otherwise reset delta values
     // Handling delta values in this way prevents a second gesture resulting in an abrupt change in the background color
@@ -137,7 +136,7 @@
     
     [self.activeColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
     cpv.backgroundColor = self.activeColor.UIColor;
-    cpv.hexLabel.text = [cpv.backgroundColor cho_hexString];
+    cpv.hexLabel.text = self.activeColor.hexString;
 }
 
 - (void)respondToTap
@@ -235,7 +234,7 @@
     NSLog(@"colorPickerController respondToCameraTap began");
     if(gesture.state == UIGestureRecognizerStateRecognized) {
         self.pickerView.backgroundColor = self.cameraView.backgroundColor;
-        self.pickerView.hexLabel.text = [self.pickerView.backgroundColor cho_hexString];
+        self.pickerView.hexLabel.text = self.activeColor.hexString;
         
         self.containerView.state = SlidingViewDefault;
     }

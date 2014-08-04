@@ -27,6 +27,26 @@
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0f];
 }
 
+- (NSString *)hexString
+{
+    CGFloat red = 0.0f, green = 0.0f, blue = 0.0f;
+    [self.UIColor getRed:&red green:&green blue:&blue alpha:NULL];
+    red *= 255, blue *= 255, green *= 255;
+    
+    NSArray *colorParts = @[
+                            [NSNumber numberWithInt:red],
+                            [NSNumber numberWithInt:green],
+                            [NSNumber numberWithInt:blue],
+                            ];
+    
+    NSMutableString *hexString = [NSMutableString stringWithString:@"#"];
+    for (NSNumber *colorPart in colorParts) {
+        [hexString appendString:[NSString stringWithFormat:@"%02X", [colorPart intValue]]];
+    }
+    
+    return hexString;
+}
+
 - (void)randomValues
 {
     NSMutableArray *randomNumbers = [[NSMutableArray alloc] init];

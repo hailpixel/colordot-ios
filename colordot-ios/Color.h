@@ -20,6 +20,7 @@
 @property (nonatomic, retain) Palette *palette;
 
 - (UIColor *)UIColor;
+- (NSString *)hexString;
 - (void)randomValues;
 
 @end
