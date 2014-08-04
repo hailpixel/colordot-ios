@@ -31,6 +31,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
     self.navigationController.navigationBarHidden = NO;
 }
 
@@ -72,7 +73,20 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Palette *palette = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [palette.created description];
+    NSArray *colorsArray = palette.colorsArray;
+    NSUInteger numberOfColors = colorsArray.count;
+    
+    CGFloat colorWidth = 320.0f/(float)numberOfColors;
+    CGFloat colorHeight = cell.contentView.frame.size.height;
+    
+    for (int i=0; i<numberOfColors; i++) {
+        CGFloat colorX = i * colorWidth;
+        CGRect frame = CGRectMake(colorX, 0.0f, colorWidth, colorHeight);
+        UIView *colorView = [[UIView alloc] initWithFrame:frame];
+        colorView.backgroundColor = ((Color *)colorsArray[i]).UIColor;
+        
+        [cell.contentView addSubview:colorView];
+    }
 }
 
 #pragma mark - Table view delegate
