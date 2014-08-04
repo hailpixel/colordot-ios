@@ -109,7 +109,6 @@
 #pragma mark - Swipe to go back
 - (void)respondToScreenEdge:(UIScreenEdgePanGestureRecognizer *)screenEdgeRecognizer
 {
-    NSLog(@"firing!");
     [self.paletteVC.navigationController popViewControllerAnimated:YES];
 }
 

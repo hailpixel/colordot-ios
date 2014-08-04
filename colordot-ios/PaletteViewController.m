@@ -181,7 +181,6 @@
 #pragma mark Table view delegate methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    NSLog(@"Height calculating for index path: %@", indexPath);
     CGFloat viewHeight = self.tableView.bounds.size.height;
     CGFloat viewWidth = self.tableView.bounds.size.width;
     CGFloat dragHeight = self.dragUpView.bounds.size.height;
@@ -201,7 +200,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    NSLog(@"Active cell index path value: %@", self.activeCellIndexPath);
     self.pullButton.hidden = YES;
     
     if (!self.colorPickerController) {
