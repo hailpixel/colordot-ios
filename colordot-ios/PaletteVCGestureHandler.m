@@ -45,12 +45,6 @@
         
         self.dragUpView.backgroundColor = self.color.UIColor;
         
-        NSLog(@"Color values: %@, %@, %@", self.color.hue, self.color.saturation, self.color.brightness);
-        
-        CGFloat a = 0.0f, b = 0.0f, c = 0.0f;
-        [self.color.UIColor getHue:&a saturation:&b brightness:&c alpha:NULL];
-        NSLog(@"UIColor values: %f, %f, %f", a, b, c);
-        
         [pvc growDragUpViewByValue:42];
         [pvc.view bringSubviewToFront:pvc.pullButton];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
@@ -104,6 +98,7 @@
                 [pvc growDragUpViewByValue:-height];
             } completion:^(BOOL finished) {
                 pvc.pullButton.hidden = NO;
+                self.color = nil;
             }];
         }
         

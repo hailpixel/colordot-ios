@@ -169,15 +169,15 @@
 		0311D33C195454C5008369C0 /* colordot-ios */ = {
 			isa = PBXGroup;
 			children = (
+				0311D345195454C5008369C0 /* AppDelegate.h */,
+				0311D346195454C5008369C0 /* AppDelegate.m */,
+				3B4907BD19547997007A6EA6 /* Main.storyboard */,
 				0388945719620EAA007920CC /* SlidingView */,
 				03636E33195A251900F05395 /* Color Picker */,
 				3BAC62031958767C004D4B0D /* Categories */,
 				3B3BE02A1979050800B9A222 /* Palette Picker */,
 				3B4EC3BA1959309800D8AF8D /* Palette */,
 				3B3BE029197903EC00B9A222 /* Core Data Objects */,
-				0311D345195454C5008369C0 /* AppDelegate.h */,
-				0311D346195454C5008369C0 /* AppDelegate.m */,
-				3B4907BD19547997007A6EA6 /* Main.storyboard */,
 				0311D348195454C5008369C0 /* colordot_ios.xcdatamodeld */,
 				0311D34B195454C5008369C0 /* Images.xcassets */,
 				0311D33D195454C5008369C0 /* Supporting Files */,
