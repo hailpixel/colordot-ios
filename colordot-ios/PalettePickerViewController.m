@@ -47,7 +47,7 @@
 }
 
 
-#pragma mark - Table View Data Source
+#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -75,9 +75,12 @@
     cell.textLabel.text = [palette.created description];
 }
 
+#pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.selectedPalette = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"showPalette" sender:self];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 
