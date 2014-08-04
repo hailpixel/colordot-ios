@@ -30,7 +30,8 @@
     return self;
 }
 
-// TODO (Colin): refactor this unholy abomination
+#pragma mark - Drag up to add
+// TODO (Colin): refactor this unholy abomination (helper methods)
 - (void)respondToPan:(UIGestureRecognizer *)gestureRecognizer;
 {
     CGFloat y = [gestureRecognizer locationInView:self.paletteVC.view].y;

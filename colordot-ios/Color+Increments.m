@@ -13,22 +13,29 @@
 #pragma mark - HSB instantiation methods
 - (void)cho_colorWithChangeToHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
 {
-    /*
-     Grayscale colors fail HSB conversion, but their RGB equivalents do not. Converting grayscale to RGB first allows for all colors to work as expected with this instance method.
-     */
     CGFloat colorHue = [self.hue floatValue], colorSaturation = [self.saturation floatValue], colorBrightness = [self.brightness floatValue];
 
     // Hue loops rather than min/max
     colorHue += hue;
     if (colorHue >= 1.0f) colorHue -= 1.0f;
     else if (colorHue < 0.0f) colorHue += 1.0f;
+    self.hue = [NSNumber numberWithFloat:colorHue];
     
     colorSaturation += saturation;
     colorBrightness += brightness;
-    
-    self.hue = [NSNumber numberWithFloat:colorHue];
-    self.saturation = [NSNumber numberWithFloat:colorSaturation];
-    self.brightness = [NSNumber numberWithFloat:colorBrightness];
+    NSArray *values = @[[NSNumber numberWithFloat:colorSaturation], [NSNumber numberWithFloat:colorBrightness]];
+    NSMutableArray *minmaxedValues = [[NSMutableArray alloc] init];
+    for (NSNumber *value in values) {
+        if ([value floatValue] > 1.0f) {
+            [minmaxedValues addObject:@1];
+        } else if ([value floatValue] < 0.0f) {
+            [minmaxedValues addObject:@0];
+        } else {
+            [minmaxedValues addObject:value];
+        }
+    }
+    self.saturation = minmaxedValues[0];
+    self.brightness = minmaxedValues[1];
 }
 
 - (void)cho_colorWithChangeToHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness

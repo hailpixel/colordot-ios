@@ -13,6 +13,8 @@
 
 @interface PalettePickerViewController ()
 
+@property (strong, nonatomic) Palette *selectedPalette;
+
 @end
 
 @implementation PalettePickerViewController
@@ -47,18 +49,18 @@
 
 #pragma mark - Table View Data Source
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
@@ -73,9 +75,9 @@
     cell.textLabel.text = [palette.created description];
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NO;
+    [self performSegueWithIdentifier:@"showPalette" sender:self];
 }
 
 
@@ -88,25 +90,39 @@
 
 
 #pragma mark - Core Data methods
-#pragma mark Fetched Results Controller
-- (NSFetchedResultsController *)fetchedResultsController
-{
+
+#pragma mark Fetched results controller
+- (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity =  [NSEntityDescription entityForName:@"Palette" inManagedObjectContext:self.managedObjectContext];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Palette" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-    NSSortDescriptor *createdSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
-    NSArray *sortDescriptors = @[createdSortDescriptor];
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *dateSavedSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+    NSArray *sortDescriptors = @[dateSavedSortDescriptor];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"PalettePickerViewController"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
     
     return _fetchedResultsController;
 }
@@ -193,6 +209,7 @@
     PaletteViewController *pvc = (PaletteViewController *)[segue destinationViewController];
     pvc.managedObjectContext = self.managedObjectContext;
     pvc.palette = self.selectedPalette;
+    self.selectedPalette = nil;
 }
 
 @end

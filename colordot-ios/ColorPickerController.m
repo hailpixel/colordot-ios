@@ -55,7 +55,6 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTap)];
     [self.pickerView addGestureRecognizer:tapRecognizer];
     
-    
     self.cameraView = [[CameraPickerView alloc] init];
     [self.cameraView.pickerButton addTarget:self action:@selector(onPickerButtonTap) forControlEvents:UIControlEventTouchUpInside];
     
@@ -223,9 +222,6 @@
         self.containerView.state = SlidingViewDefault;
     }
 }
-
-
-
 
 /*
 #pragma mark - Navigation

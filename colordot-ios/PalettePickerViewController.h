@@ -15,7 +15,6 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) Palette *selectedPalette;
 
 - (IBAction)addAction:(id)sender;
 
