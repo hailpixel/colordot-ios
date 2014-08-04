@@ -150,6 +150,7 @@
 #pragma mark Color Picker delegate methods
 - (void)colorPickerController:(ColorPickerController *)colorPickerController didPickColor:(UIColor *)color
 {
+    NSLog(@"paletteViewController colorPickerControllerDidPickColor began");
     [self saveContext];
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.activeCellIndexPath];
@@ -157,8 +158,10 @@
     
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
+        NSLog(@"paletteViewController colorPickerControllerDidPickColor completionBlock began");
         self.pullButton.hidden = NO;
         [self updateButton];
+        NSLog(@"paletteViewController colorPickerControllerDidPickColor completionBlock ending");
     }];
     
     [self.tableView beginUpdates];
@@ -169,6 +172,8 @@
     [self.tableView endUpdates];
     
     [CATransaction commit];
+    NSLog(@"paletteViewController colorPickerControllerDidPickColor ending");
+
 }
 
 
@@ -214,11 +219,14 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"paletteViewController didDeselectRowAtIndexPath began");
+    [self.managedObjectContext refreshObject:self.colorPickerController.activeColor mergeChanges:NO];
     [self.colorPickerController.view removeFromSuperview];
     [self.colorPickerController removeFromParentViewController];
     
     self.activeCellIndexPath = nil;
     self.colorPickerController = nil;
+    NSLog(@"paletteViewController didDeselectRowAtIndexPath ending");
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

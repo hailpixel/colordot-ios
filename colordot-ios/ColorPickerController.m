@@ -51,6 +51,7 @@
 }
 
 - (void)loadView {
+    NSLog(@"colorPickerController loadView began");
     self.pickerView = [[ColorPickerView alloc] init];
     [self.pickerView.cameraButton addTarget:self action:@selector(onCameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
     
@@ -78,6 +79,7 @@
     // TODO initialize the camera only when needed
     [self initializeCamera];
     [cameraSession startRunning];
+    NSLog(@"colorPickerController loadView ending");
 }
 
 - (void)viewDidLoad
@@ -140,13 +142,15 @@
 
 - (void)respondToTap
 {
+    NSLog(@"colorPickerController respondToTap began");
     [self.delegate colorPickerController:self didPickColor:self.pickerView.backgroundColor];
+    NSLog(@"colorPickerController respondToTap ending");
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView:self.pickerView];
 
-    if(self.containerView.state == SlidingViewDefault && point.x > 200.0f) {
+    if(self.containerView.state == SlidingViewDefault && point.x > 260.0f) {
         return NO;
     }
     
@@ -167,6 +171,7 @@
 
 #pragma mark - Camera methods
 - (void)initializeCamera {
+    NSLog(@"colorPickerController initializeCamera began");
     cameraSession = [[AVCaptureSession alloc] init];
     cameraSession.sessionPreset = AVCaptureSessionPresetPhoto;
     
@@ -180,6 +185,8 @@
     
     [cameraSession addInput:input];
     
+    NSLog(@"%@", cameraSession);
+    
     previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:cameraSession];
     self.cameraView.previewLayer = previewLayer;
     
@@ -189,6 +196,7 @@
     output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
     [output setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
     [cameraSession addOutput:output];
+    NSLog(@"colorPickerController initializeCamera ending");
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
@@ -224,12 +232,14 @@
 }
 
 - (void)respondToCameraTap:(UITapGestureRecognizer *)gesture {
+    NSLog(@"colorPickerController respondToCameraTap began");
     if(gesture.state == UIGestureRecognizerStateRecognized) {
         self.pickerView.backgroundColor = self.cameraView.backgroundColor;
         self.pickerView.hexLabel.text = [self.pickerView.backgroundColor cho_hexString];
         
         self.containerView.state = SlidingViewDefault;
     }
+    NSLog(@"colorPickerController respondToCameraTap ending");
 }
 
 /*
