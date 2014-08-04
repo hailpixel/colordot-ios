@@ -14,7 +14,7 @@
 - (void)cho_colorWithChangeToHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
 {
     CGFloat colorHue = [self.hue floatValue], colorSaturation = [self.saturation floatValue], colorBrightness = [self.brightness floatValue];
-
+    
     // Hue loops rather than min/max
     colorHue += hue;
     if (colorHue >= 1.0f) colorHue -= 1.0f;
@@ -57,6 +57,5 @@
 {
     [self cho_colorWithChangeToHue:0.0f saturation:0.0f brightness:brightness];
 }
-
 
 @end

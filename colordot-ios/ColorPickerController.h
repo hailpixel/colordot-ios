@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class SlidingView, ColorPickerView, CameraPickerView, Color;
+@class ColorPickerController, SlidingView, ColorPickerView, CameraPickerView, Color;
 
 @protocol ColorPickerDelegate <NSObject>
 
-- (void)colorPicked:(UIColor *)color;
+- (void)colorPickerController:(ColorPickerController *)colorPickerController didPickColor:(UIColor *)color;
 
 @end
 

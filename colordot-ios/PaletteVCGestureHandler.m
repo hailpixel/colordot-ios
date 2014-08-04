@@ -73,15 +73,10 @@
                 [UIView setAnimationsEnabled:NO];
                 
                 [self.tableView beginUpdates];
+                
                 [pvc.palette addColorsObject:self.color];
-                
-                NSLog(@"Color values: %@, %@, %@", self.color.hue, self.color.saturation, self.color.brightness);
-                
-                CGFloat a = 0.0f, b = 0.0f, c = 0.0f;
-                [self.color.UIColor getHue:&a saturation:&b brightness:&c alpha:NULL];
-                NSLog(@"UIColor values: %f, %f, %f", a, b, c);
-                
                 [pvc saveContext];
+                
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(pvc.colorsArray.count - 1) inSection:0];
                 [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
                 [self.tableView endUpdates];

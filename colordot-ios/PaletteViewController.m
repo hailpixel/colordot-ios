@@ -121,6 +121,7 @@
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.colorsArray.count - 1) inSection:0];
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        
         [self.tableView endUpdates];
         
         [CATransaction commit];
@@ -144,7 +145,6 @@
     NSLog(@"Color values: %@, %@, %@", selectedColor.hue, selectedColor.saturation, selectedColor.brightness);
 
     self.colorPickerController.activeColor = self.colorsArray[index];
-    
     self.colorPickerController.delegate = self;
     
     [self addChildViewController:self.colorPickerController];
@@ -153,7 +153,7 @@
 
 
 #pragma mark Color Picker delegate methods
-- (void)colorPicked:(UIColor *)color
+- (void)colorPickerController:(ColorPickerController *)colorPickerController didPickColor:(UIColor *)color
 {
     [self saveContext];
     
@@ -167,8 +167,10 @@
     }];
     
     [self.tableView beginUpdates];
+    
     [self.tableView deselectRowAtIndexPath:self.activeCellIndexPath animated:YES];
     [self tableView:self.tableView didDeselectRowAtIndexPath:self.activeCellIndexPath];
+    
     [self.tableView endUpdates];
     
     [CATransaction commit];

@@ -96,7 +96,6 @@
 }
 
 #pragma mark - Gesture Handling
-
 - (void)panGestureUpdate:(UIPanGestureRecognizer *)gestureRecognizer
 {
     ColorPickerView *cpv = self.pickerView;
@@ -132,8 +131,9 @@
 
 - (void)respondToTap
 {
-    [self.delegate colorPicked:self.pickerView.backgroundColor];
+    [self.delegate colorPickerController:self didPickColor:self.pickerView.backgroundColor];
 }
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     CGPoint point = [gestureRecognizer locationInView:self.pickerView];
 
@@ -197,7 +197,7 @@
     unsigned char *pixel = NULL;
     int avgRed = 0, avgGreen = 0, avgBlue = 0, x, y;
     
-    for(y = videoPointY - 5; y < videoPointY + 5; y ++) {
+    for (y = videoPointY - 5; y < videoPointY + 5; y ++) {
         for(x = videoPointX - 5; x < videoPointX + 5; x ++) {
             pixel = rowBase + (x * bytesPerRow) + (y * 4);
             avgBlue += pixel[0];
