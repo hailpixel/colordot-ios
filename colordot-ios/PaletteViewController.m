@@ -51,6 +51,10 @@
     [self.panRecognizer addTarget:self.gestureHandler action:@selector(respondToPan:)];
     self.panRecognizer.delegate = self.gestureHandler;
     
+    UIScreenEdgePanGestureRecognizer *screenEdgeRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self.gestureHandler action:@selector(respondToScreenEdge:)];
+    screenEdgeRecognizer.edges = UIRectEdgeLeft;
+    [self.view addGestureRecognizer:screenEdgeRecognizer];
+    
     [self setupDragUpView];
     [self updateButton];
 }

@@ -21,5 +21,6 @@
 - (PaletteVCGestureHandler *)initWithPaletteVC:(PaletteViewController *)paletteVC;
 
 - (void)respondToPan:(UIGestureRecognizer *)gestureRecognizer;
+- (void)respondToScreenEdge:(UIScreenEdgePanGestureRecognizer *)screenEdgeRecognizer;
 
 @end

@@ -106,6 +106,13 @@
     self.yLagged = y;
 }
 
+#pragma mark - Swipe to go back
+- (void)respondToScreenEdge:(UIScreenEdgePanGestureRecognizer *)screenEdgeRecognizer
+{
+    NSLog(@"firing!");
+    [self.paletteVC.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma mark - UIGestureRecognizer delegate methods
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
