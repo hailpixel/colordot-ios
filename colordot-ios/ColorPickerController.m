@@ -54,8 +54,13 @@
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTap)];
     [self.pickerView addGestureRecognizer:tapRecognizer];
+    
+    
     self.cameraView = [[CameraPickerView alloc] init];
     [self.cameraView.pickerButton addTarget:self action:@selector(onPickerButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    
+    UITapGestureRecognizer *cameraTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToCameraTap:)];
+    [self.cameraView addGestureRecognizer:cameraTapRecognizer];
     
     self.containerView = [[SlidingView alloc] init];
     self.view = self.containerView;
@@ -208,6 +213,15 @@
     
     UIColor *sampledColor = [UIColor colorWithRed:avgRed / 255.0f green:avgGreen / 255.0f blue:avgBlue / 255.0f alpha:1.0f];
     self.cameraView.backgroundColor = sampledColor;
+}
+
+- (void)respondToCameraTap:(UITapGestureRecognizer *)gesture {
+    if(gesture.state == UIGestureRecognizerStateRecognized) {
+        self.pickerView.backgroundColor = self.cameraView.backgroundColor;
+        self.pickerView.hexLabel.text = [self.pickerView.backgroundColor cho_hexString];
+        
+        self.containerView.state = SlidingViewDefault;
+    }
 }
 
 
