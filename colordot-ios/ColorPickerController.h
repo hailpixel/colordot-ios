@@ -25,8 +25,10 @@
 @property (nonatomic, strong) SlidingView *containerView;
 @property (nonatomic, strong) ColorPickerView *pickerView;
 @property (nonatomic, strong) CameraPickerView *cameraView;
-@property (nonatomic, weak) id <ColorPickerDelegate> delegate;
 
 @property (weak, nonatomic) Color *activeColor;
+@property (nonatomic, weak) id <ColorPickerDelegate> delegate;
+
+- (id)initWithColor:(Color *)color;
 
 @end

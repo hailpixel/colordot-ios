@@ -133,19 +133,14 @@
 #pragma mark Cell selection
 - (void)instantiateColorPickerViewForIndexPath:(NSIndexPath *)indexPath
 {
-    self.colorPickerController = [[ColorPickerController alloc] init];
+    NSUInteger index = [indexPath indexAtPosition:1];
+    self.colorPickerController = [[ColorPickerController alloc] initWithColor:self.colorsArray[index]];
+    self.colorPickerController.delegate = self;
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect cellBounds = cell.contentView.bounds;
     CGRect colorPickerViewFrame = CGRectMake(0.0f, 0.0f, cellBounds.size.width, cellBounds.size.height);
     self.colorPickerController.view.frame = colorPickerViewFrame;
-    
-    NSUInteger index = [indexPath indexAtPosition:1];
-    Color *selectedColor = self.colorsArray[index];
-    NSLog(@"Color values: %@, %@, %@", selectedColor.hue, selectedColor.saturation, selectedColor.brightness);
-
-    self.colorPickerController.activeColor = self.colorsArray[index];
-    self.colorPickerController.delegate = self;
     
     [self addChildViewController:self.colorPickerController];
     [cell.contentView addSubview:self.colorPickerController.view];

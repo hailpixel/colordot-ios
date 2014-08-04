@@ -41,6 +41,15 @@
     return self;
 }
 
+- (id)initWithColor:(Color *)color
+{
+    self = [super init];
+    if (self) {
+        self.activeColor = color;
+    }
+    return self;
+}
+
 - (void)loadView {
     self.pickerView = [[ColorPickerView alloc] init];
     [self.pickerView.cameraButton addTarget:self action:@selector(onCameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
