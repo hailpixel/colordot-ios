@@ -55,6 +55,9 @@
     screenEdgeRecognizer.edges = UIRectEdgeLeft;
     [self.view addGestureRecognizer:screenEdgeRecognizer];
     
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self.gestureHandler action:@selector(respondToLongPress:)];
+    [self.view addGestureRecognizer:longPressRecognizer];
+    
     [self setupDragUpView];
     [self updateButton];
 }
@@ -89,11 +92,16 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger index = [indexPath indexAtPosition:1];
-    Color *cellColor = self.colorsArray[index];
-    cell.backgroundColor = [cellColor UIColor];
-    cell.textLabel.text = cellColor.hexString;
-    cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
+    if (!(self.reorderingCellIndexPath == nil) && [indexPath isEqual:self.reorderingCellIndexPath]) {
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor clearColor];
+    } else {
+        NSUInteger index = [indexPath indexAtPosition:1];
+        Color *cellColor = self.colorsArray[index];
+        cell.backgroundColor = [cellColor UIColor];
+        cell.textLabel.text = cellColor.hexString;
+        cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,6 +110,24 @@
     else return YES;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat viewHeight = self.tableView.bounds.size.height;
+    CGFloat viewWidth = self.tableView.bounds.size.width;
+    CGFloat dragHeight = self.dragUpView.bounds.size.height;
+    
+    if (self.activeCellIndexPath == nil) {
+        return ROUNDUPHALF((viewHeight - dragHeight) / self.colorsArray.count);
+    } else {
+        CGFloat inactiveCellHeight = ROUNDUPHALF(0.2f * (viewHeight - viewWidth));
+        
+        if ([indexPath isEqual:self.activeCellIndexPath]) {
+            return viewHeight - ((self.colorsArray.count - 1) * inactiveCellHeight);
+        } else {
+            return inactiveCellHeight;
+        }
+    }
+}
 
 #pragma mark - Add/Remove methods
 - (void)pullButtonAction:(id)sender
@@ -179,25 +205,6 @@
 
 
 #pragma mark Table view delegate methods
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat viewHeight = self.tableView.bounds.size.height;
-    CGFloat viewWidth = self.tableView.bounds.size.width;
-    CGFloat dragHeight = self.dragUpView.bounds.size.height;
-    
-    if (self.activeCellIndexPath == nil) {
-        return ROUNDUPHALF((viewHeight - dragHeight) / self.colorsArray.count);
-    } else {
-        CGFloat inactiveCellHeight = ROUNDUPHALF(0.2f * (viewHeight - viewWidth));
-        
-        if ([indexPath isEqual:self.activeCellIndexPath]) {
-            return viewHeight - ((self.colorsArray.count - 1) * inactiveCellHeight);
-        } else {
-            return inactiveCellHeight;
-        }
-    }
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.pullButton.hidden = YES;

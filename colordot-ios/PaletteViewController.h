@@ -23,6 +23,7 @@
 @property (strong, nonatomic) ColorPickerController *colorPickerController;
 @property (strong, nonatomic) NSArray *colorsArray;
 @property (strong, nonatomic) NSIndexPath *activeCellIndexPath;
+@property (strong, nonatomic) NSIndexPath *reorderingCellIndexPath;
 
 - (IBAction)pullButtonAction:(id)sender;
 - (void)growDragUpViewByValue:(CGFloat)size;

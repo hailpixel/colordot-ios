@@ -22,5 +22,6 @@
 
 - (void)respondToPan:(UIGestureRecognizer *)gestureRecognizer;
 - (void)respondToScreenEdge:(UIScreenEdgePanGestureRecognizer *)screenEdgeRecognizer;
+- (void)respondToLongPress:(UILongPressGestureRecognizer *)longPressRecognizer;
 
 @end

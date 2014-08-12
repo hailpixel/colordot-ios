@@ -112,6 +112,36 @@
     [self.paletteVC.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - Tap and hold to reorder
+- (void)respondToLongPress:(UILongPressGestureRecognizer *)longPressRecognizer
+{
+    PaletteViewController *pvc = self.paletteVC;
+    UITableView *tableView = self.tableView;
+    
+    if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
+        pvc.reorderingCellIndexPath = nil;
+        int rowCount = pvc.colorsArray.count;
+        int row = 0;
+        while (pvc.reorderingCellIndexPath == nil) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            CGRect tableViewRect = [tableView rectForRowAtIndexPath:indexPath];
+            CGPoint touchPoint = [longPressRecognizer locationInView:tableView];
+            
+            if (CGRectContainsPoint(tableViewRect, touchPoint)) pvc.reorderingCellIndexPath = indexPath;
+            else row++;
+            
+            if (row >= rowCount) {
+                NSLog(@"Did not find touch.");
+                abort();
+            }
+        }
+        [tableView reloadData];
+    } else if (longPressRecognizer.state == UIGestureRecognizerStateEnded) {
+        pvc.reorderingCellIndexPath = nil;
+        [tableView reloadData];
+    }
+}
+
 
 #pragma mark - UIGestureRecognizer delegate methods
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
