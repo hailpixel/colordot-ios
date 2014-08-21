@@ -16,6 +16,7 @@
 
 @interface PaletteVCGestureHandler ()
 
+@property CGFloat xLagged;
 @property CGFloat yLagged;
 @property UIView *reorderingCellView;
 
@@ -120,6 +121,9 @@
 {
     PaletteViewController *pvc = self.paletteVC;
     UITableView *tableView = self.tableView;
+    CGPoint touchPoint = [longPressRecognizer locationInView:tableView];
+    CGFloat x = touchPoint.x;
+    CGFloat y = touchPoint.y;
     
     if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
         // grab reordering cell
@@ -129,7 +133,6 @@
         while (pvc.reorderingCellIndexPath == nil) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             CGRect tableViewRect = [tableView rectForRowAtIndexPath:indexPath];
-            CGPoint touchPoint = [longPressRecognizer locationInView:tableView];
             
             if (CGRectContainsPoint(tableViewRect, touchPoint)) pvc.reorderingCellIndexPath = indexPath;
             else row++;
@@ -155,15 +158,23 @@
         }];
         
         [tableView reloadData];
-        
     } else if (longPressRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGFloat xDelta = x - self.xLagged;
+        CGFloat yDelta = y - self.yLagged;
         
+        CGRect reorderingCellFrame = self.reorderingCellView.frame;
+        reorderingCellFrame.origin.x += xDelta;
+        reorderingCellFrame.origin.y += yDelta;
+        self.reorderingCellView.frame = reorderingCellFrame;
     } else if (longPressRecognizer.state == UIGestureRecognizerStateEnded) {
         pvc.reorderingCellIndexPath = nil;
         [self.reorderingCellView removeFromSuperview];
         self.reorderingCellView = nil;
         [tableView reloadData];
     }
+    
+    self.xLagged = x;
+    self.yLagged = y;
 }
 
 
