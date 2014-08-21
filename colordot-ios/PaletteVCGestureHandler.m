@@ -11,10 +11,13 @@
 
 #import "Palette.h"
 #import "Color.h"
+#import "UIView+Clone.h"
+#import "UIView+Shadow.h"
 
 @interface PaletteVCGestureHandler ()
 
 @property CGFloat yLagged;
+@property UIView *reorderingCellView;
 
 @end
 
@@ -119,8 +122,9 @@
     UITableView *tableView = self.tableView;
     
     if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
+        // grab reordering cell
         pvc.reorderingCellIndexPath = nil;
-        int rowCount = pvc.colorsArray.count;
+        NSUInteger rowCount = pvc.colorsArray.count;
         int row = 0;
         while (pvc.reorderingCellIndexPath == nil) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
@@ -135,9 +139,29 @@
                 abort();
             }
         }
+        
+        // add clone view to tableView
+        UITableViewCell *reorderingCell = [tableView cellForRowAtIndexPath:pvc.reorderingCellIndexPath];
+        CGRect reorderingCellRect = [tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
+        
+        self.reorderingCellView = [reorderingCell clone];
+        self.reorderingCellView.frame = reorderingCellRect;
+        [self.reorderingCellView addShadow];
+        
+        [tableView addSubview:self.reorderingCellView];
+
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.reorderingCellView setTransform:CGAffineTransformMakeScale(1.2f, 1.2f)];
+        }];
+        
         [tableView reloadData];
+        
+    } else if (longPressRecognizer.state == UIGestureRecognizerStateChanged) {
+        
     } else if (longPressRecognizer.state == UIGestureRecognizerStateEnded) {
         pvc.reorderingCellIndexPath = nil;
+        [self.reorderingCellView removeFromSuperview];
+        self.reorderingCellView = nil;
         [tableView reloadData];
     }
 }

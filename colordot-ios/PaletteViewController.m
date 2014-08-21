@@ -260,6 +260,22 @@
 
 
 #pragma mark - Private methods
+- (UIColor *)whiteOrBlackWithColor:(UIColor *)color
+{
+    CGFloat brightness = 0.0f;
+    [color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
+    
+    if (brightness > 0.8f) return [UIColor blackColor];
+    return [UIColor whiteColor];
+}
+
+- (void)updateButton
+{
+    UIColor *color = [self whiteOrBlackWithColor:[[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)] UIColor]];
+    self.pullButton.tintColor = [color colorWithAlphaComponent:0.63f];
+}
+
+#pragma mark Data management
 - (void)saveContext
 {
     NSError *error = nil;
@@ -271,15 +287,15 @@
     self.colorsArray = self.palette.colorsArray;
 }
 
-- (UIColor *)whiteOrBlackWithColor:(UIColor *)color
+- (void)updateOrder
 {
-    CGFloat brightness = 0.0f;
-    [color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
-    
-    if (brightness > 0.8f) return [UIColor blackColor];
-    return [UIColor whiteColor];
+    for (Color *color in self.colorsArray) {
+        color.order = [NSNumber numberWithUnsignedInteger:[self.colorsArray indexOfObject:color]];
+        [self saveContext];
+    }
 }
 
+#pragma mark Drag up view management
 - (void)setupDragUpView
 {
     CGFloat viewWidth = self.view.bounds.size.width;
@@ -292,12 +308,6 @@
     self.gestureHandler.dragUpView = view;
 }
 
-- (void)updateButton
-{
-    UIColor *color = [self whiteOrBlackWithColor:[[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)] UIColor]];
-    self.pullButton.tintColor = [color colorWithAlphaComponent:0.63f];
-}
-
 - (void)growDragUpViewByValue:(CGFloat)size
 {
     CGRect frame = self.dragUpView.frame;
@@ -308,14 +318,6 @@
     [self.tableView beginUpdates];
     self.dragUpView.frame = frame;
     [self.tableView endUpdates];
-}
-
-- (void)updateOrder
-{
-    for (Color *color in self.colorsArray) {
-        color.order = [NSNumber numberWithUnsignedInteger:[self.colorsArray indexOfObject:color]];
-        [self saveContext];
-    }
 }
 
 @end

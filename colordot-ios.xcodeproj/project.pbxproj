@@ -35,6 +35,8 @@
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
 		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
+		3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117319A68F950068DCF3 /* UIView+Clone.m */; };
+		3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117919A69B0F0068DCF3 /* UIView+Shadow.m */; };
 		3BED71001978310200829417 /* PalettePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BED70FF1978310200829417 /* PalettePickerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,10 @@
 		3B5B6006198270C000B6826D /* Color+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Color+Increments.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
 		3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteVCGestureHandler.m; sourceTree = "<group>"; };
+		3BC4117219A68F950068DCF3 /* UIView+Clone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Clone.h"; sourceTree = "<group>"; };
+		3BC4117319A68F950068DCF3 /* UIView+Clone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Clone.m"; sourceTree = "<group>"; };
+		3BC4117819A69B0F0068DCF3 /* UIView+Shadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Shadow.h"; sourceTree = "<group>"; };
+		3BC4117919A69B0F0068DCF3 /* UIView+Shadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Shadow.m"; sourceTree = "<group>"; };
 		3BED70FE1978310200829417 /* PalettePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PalettePickerViewController.h; sourceTree = "<group>"; };
 		3BED70FF1978310200829417 /* PalettePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PalettePickerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -264,6 +270,10 @@
 			children = (
 				3B5B6005198270C000B6826D /* Color+Increments.h */,
 				3B5B6006198270C000B6826D /* Color+Increments.m */,
+				3BC4117219A68F950068DCF3 /* UIView+Clone.h */,
+				3BC4117319A68F950068DCF3 /* UIView+Clone.m */,
+				3BC4117819A69B0F0068DCF3 /* UIView+Shadow.h */,
+				3BC4117919A69B0F0068DCF3 /* UIView+Shadow.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -364,9 +374,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */,
 				0352CE381966B86E0078ACFC /* CameraPickerView.m in Sources */,
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
+				3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */,
 				3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */,
 				3B1B3B1A195D9ABA0095DCFF /* PaletteViewController.m in Sources */,
 				3B3BE025197903D300B9A222 /* Palette.m in Sources */,
