@@ -209,7 +209,8 @@
     PaletteViewController *pvc = self.paletteVC;
     
     CGFloat y = [touch locationInView:pvc.view].y;
-    if (y > (pvc.view.frame.size.height - 42) && pvc.activeCellIndexPath == nil && pvc.colorsArray.count < 6) return YES;
+    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && pvc.activeCellIndexPath == nil) return YES;
+    else if (y > (pvc.view.frame.size.height - 42) && pvc.activeCellIndexPath == nil && pvc.colorsArray.count < 6) return YES;
     return NO;
 }
 

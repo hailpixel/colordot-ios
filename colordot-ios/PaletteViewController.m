@@ -58,6 +58,7 @@
     [self.view addGestureRecognizer:screenEdgeRecognizer];
     
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self.gestureHandler action:@selector(respondToLongPress:)];
+    longPressRecognizer.delegate = self.gestureHandler;
     [self.view addGestureRecognizer:longPressRecognizer];
     
     [self setupDragUpView];
