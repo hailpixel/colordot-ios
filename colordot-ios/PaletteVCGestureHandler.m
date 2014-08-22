@@ -190,6 +190,7 @@
         CGRect movedCellFrame = [tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
         pvc.reorderingCellIndexPath = nil;
         [UIView animateWithDuration:0.2 animations:^{
+            // TODO (Colin): convert this animation to a CGAffineTransformIdentity and center the clone view over the moved cell, to fix the hexLabel not resizing with the view.
             self.reorderingCellView.frame = movedCellFrame;
         } completion:^(BOOL finished) {
             [self.reorderingCellView removeFromSuperview];
