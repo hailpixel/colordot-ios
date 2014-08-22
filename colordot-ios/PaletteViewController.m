@@ -43,6 +43,8 @@
 {
     [super viewDidLoad];
     
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"transparency"]];
+    
     self.colorsArray = self.palette.colorsArray;
     
     self.activeCellIndexPath = nil;
@@ -291,8 +293,9 @@
 {
     for (Color *color in self.colorsArray) {
         color.order = [NSNumber numberWithUnsignedInteger:[self.colorsArray indexOfObject:color]];
-        [self saveContext];
     }
+    
+    [self saveContext];
 }
 
 #pragma mark Drag up view management
