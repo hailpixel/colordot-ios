@@ -22,10 +22,7 @@
     AVCaptureVideoPreviewLayer *previewLayer;
 }
 
-@property (nonatomic, strong) SlidingView *containerView;
 @property (nonatomic, strong) ColorPickerView *pickerView;
-@property (nonatomic, strong) CameraPickerView *cameraView;
-
 @property (weak, nonatomic) Color *activeColor;
 @property (nonatomic, weak) id <ColorPickerDelegate> delegate;
 

@@ -35,7 +35,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        // init
     }
     return self;
 }
@@ -50,9 +50,10 @@
 }
 
 - (void)loadView {
-    NSLog(@"colorPickerController loadView began");
     self.pickerView = [[ColorPickerView alloc] init];
-    [self.pickerView.cameraButton addTarget:self action:@selector(onCameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.pickerView.openCameraButton addTarget:self action:@selector(openCameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.pickerView.closeCameraButton addTarget:self action:@selector(closeCameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
     
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureUpdate:)];
     panRecognizer.delegate = self;
@@ -64,18 +65,7 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTap)];
     [self.pickerView addGestureRecognizer:tapRecognizer];
     
-    self.cameraView = [[CameraPickerView alloc] init];
-    [self.cameraView.pickerButton addTarget:self action:@selector(onPickerButtonTap) forControlEvents:UIControlEventTouchUpInside];
-    
-    UITapGestureRecognizer *cameraTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToCameraTap:)];
-    [self.cameraView addGestureRecognizer:cameraTapRecognizer];
-    
-    self.containerView = [[SlidingView alloc] init];
-    self.view = self.containerView;
-    self.containerView.centerView = self.pickerView;
-    self.containerView.rightView = self.cameraView;
-
-    [self initializeCamera];
+    self.view = self.pickerView;
 }
 
 - (void)viewDidLoad
@@ -147,29 +137,22 @@
     NSLog(@"colorPickerController respondToTap ending");
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    CGPoint point = [gestureRecognizer locationInView:self.pickerView];
-
-    if(self.containerView.state == SlidingViewDefault && point.x > 260.0f) {
-        return NO;
-    }
-    
-    if(self.containerView.state == SlidingViewRight && point.x < 100.0f) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (void)onCameraButtonTap {
-    self.containerView.state = SlidingViewRight;
-}
-
-- (void)onPickerButtonTap {
-    self.containerView.state = SlidingViewDefault;
-}
-
 #pragma mark - Camera methods
+
+- (void)openCameraButtonTap {
+    self.pickerView.state = ColorPickerStateCameraInitializing;
+    [self initializeCamera];
+}
+
+- (void)closeCameraButtonTap {
+    self.pickerView.state = ColorPickerStateTouch;
+    
+    if(cameraSession && cameraSession.isRunning) {
+        [cameraSession stopRunning];
+        cameraSession = nil;
+    }
+}
+
 - (void)initializeCamera {
     NSLog(@"colorPickerController initializeCamera began");
     cameraSession = [[AVCaptureSession alloc] init];
@@ -200,7 +183,10 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:cameraSession];
-            self.cameraView.previewLayer = previewLayer;
+            
+            // TODO attach preview layout to the pickerView
+            //self.cameraView.previewLayer = previewLayer;
+            self.pickerView.state = ColorPickerStateCamera;
         });
     });
 }
@@ -234,18 +220,7 @@
     avgRed /= 100;
     
     UIColor *sampledColor = [UIColor colorWithRed:avgRed / 255.0f green:avgGreen / 255.0f blue:avgBlue / 255.0f alpha:1.0f];
-    self.cameraView.backgroundColor = sampledColor;
-}
-
-- (void)respondToCameraTap:(UITapGestureRecognizer *)gesture {
-    NSLog(@"colorPickerController respondToCameraTap began");
-    if(gesture.state == UIGestureRecognizerStateRecognized) {
-        self.pickerView.backgroundColor = self.cameraView.backgroundColor;
-        self.pickerView.hexLabel.text = self.activeColor.hexString;
-        
-        self.containerView.state = SlidingViewDefault;
-    }
-    NSLog(@"colorPickerController respondToCameraTap ending");
+    self.pickerView.backgroundColor = sampledColor;
 }
 
 /*

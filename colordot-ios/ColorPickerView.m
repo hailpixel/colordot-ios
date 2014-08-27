@@ -14,7 +14,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self interfaceSetup];
+        [self initializeInterface];
+        self.state = ColorPickerStateTouch;
     }
     return self;
 }
@@ -24,8 +25,40 @@
     [self layoutInterface];
 }
 
+- (void)setState:(ColorPickerState)state {
+    _state = state;
+    
+    switch(self.state) {
+        case ColorPickerStateTouch:
+            self.openCameraButton.enabled = YES;
+            self.openCameraButton.hidden = NO;
+            
+            self.closeCameraButton.enabled = NO;
+            self.closeCameraButton.hidden = YES;
+            break;
+            
+        case ColorPickerStateCameraInitializing:
+            self.openCameraButton.enabled = NO;
+            self.openCameraButton.hidden = YES;
+            break;
+            
+        case ColorPickerStateCameraOpening:
+            break;
+            
+        case ColorPickerStateCamera:
+            self.closeCameraButton.enabled = YES;
+            self.closeCameraButton.hidden = NO;
+            break;
+            
+        case ColorPickerStateCameraClosing:
+            self.closeCameraButton.enabled = YES;
+            self.closeCameraButton.hidden = NO;
+            break;
+    }
+}
+
 #pragma mark - Private methods
-- (void)interfaceSetup
+- (void)initializeInterface
 {
     CGFloat inset = (self.bounds.size.width / 2.0f) - 50.0f;
     UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 100.0f, 100.0f)];
@@ -41,10 +74,19 @@
     [self addSubview:hexLabel];
     self.hexLabel = hexLabel;
     
-    UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 100, 32);
+    [button setTitle:@"Camera" forState:UIControlStateNormal];
     
-    [self addSubview:cameraButton];
-    self.cameraButton = cameraButton;
+    [self addSubview:button];
+    self.openCameraButton = button;
+    
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 100, 32);
+    [button setTitle:@"Close" forState:UIControlStateNormal];
+    
+    [self addSubview:button];
+    self.closeCameraButton = button;
     
     [self layoutInterface];
 }
@@ -52,7 +94,8 @@
 - (void)layoutInterface
 {
     self.hexLabel.center = self.center;
-    self.cameraButton.center = CGPointMake(self.bounds.size.width - 20.0f, self.center.y);
+    self.openCameraButton.center = CGPointMake(self.center.x, self.bounds.size.height - 20.0f);
+    self.closeCameraButton.center = self.openCameraButton.center;
 }
 
 @end

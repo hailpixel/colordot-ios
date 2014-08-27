@@ -10,7 +10,18 @@
 
 @interface ColorPickerView : UIView
 
+typedef enum {
+    ColorPickerStateTouch,
+    ColorPickerStateCameraInitializing,
+    ColorPickerStateCameraOpening,
+    ColorPickerStateCamera,
+    ColorPickerStateCameraClosing
+} ColorPickerState;
+
+@property (nonatomic) ColorPickerState state;
 @property (weak, nonatomic) UILabel *hexLabel;
-@property (weak, nonatomic) UIButton *cameraButton;
+
+@property (weak, nonatomic) UIButton *openCameraButton;
+@property (weak, nonatomic) UIButton *closeCameraButton;
 
 @end
