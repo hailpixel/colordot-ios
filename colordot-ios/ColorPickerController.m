@@ -75,10 +75,7 @@
     self.containerView.centerView = self.pickerView;
     self.containerView.rightView = self.cameraView;
 
-    // TODO initialize the camera only when needed
     [self initializeCamera];
-    [cameraSession startRunning];
-    NSLog(@"colorPickerController loadView ending");
 }
 
 - (void)viewDidLoad
@@ -143,6 +140,10 @@
 {
     NSLog(@"colorPickerController respondToTap began");
     [self.delegate colorPickerController:self didPickColor:self.pickerView.backgroundColor];
+    if(cameraSession) {
+        [cameraSession stopRunning];
+        
+    }
     NSLog(@"colorPickerController respondToTap ending");
 }
 
@@ -178,24 +179,30 @@
     NSError *error;
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
     
-    if(!input) {
-        NSLog(@"Error grabbing input device");
+
+    if([cameraSession canAddInput:input]) {
+        [cameraSession addInput:input];
     }
     
-    [cameraSession addInput:input];
-    
-    NSLog(@"%@", cameraSession);
-    
-    previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:cameraSession];
-    self.cameraView.previewLayer = previewLayer;
-    
-    // Setup the sample buffer output
     AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
     output.alwaysDiscardsLateVideoFrames = YES;
     output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
     [output setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-    [cameraSession addOutput:output];
-    NSLog(@"colorPickerController initializeCamera ending");
+    
+    if([cameraSession canAddOutput:output]) {
+        [cameraSession addOutput:output];
+    }
+    
+    // async startup of the camera session so it doesn't block UI input
+    dispatch_queue_t layerQ = dispatch_queue_create("layerQ", NULL);
+    dispatch_async(layerQ, ^{
+        [cameraSession startRunning];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:cameraSession];
+            self.cameraView.previewLayer = previewLayer;
+        });
+    });
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
