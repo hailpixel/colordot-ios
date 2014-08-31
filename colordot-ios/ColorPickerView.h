@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
+@class Color;
 
 @interface ColorPickerView : UIView
 
@@ -23,5 +26,9 @@ typedef enum {
 
 @property (weak, nonatomic) UIButton *openCameraButton;
 @property (weak, nonatomic) UIButton *closeCameraButton;
+
+@property (weak, nonatomic) AVCaptureVideoPreviewLayer *previewLayer;
+
+-(void)setPickedColor:(Color *)color;
 
 @end

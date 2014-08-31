@@ -8,8 +8,6 @@
 
 #import "ColorPickerController.h"
 #import "ColorPickerView.h"
-#import "CameraPickerView.h"
-#import "SlidingView.h"
 
 #import "Color.h"
 #import "Color+Increments.h"
@@ -99,8 +97,7 @@
     
     // Update hue and brightness according to past delta values because gestureRecognizer fires on a gesture's ending
     [self.activeColor cho_colorWithChangeToHue:(self.xDelta/1000) saturation:0.0f brightness:-(self.yDelta/1000)];
-    cpv.backgroundColor = [self.activeColor UIColor];
-    cpv.hexLabel.text = self.activeColor.hexString;
+    [cpv setPickedColor: self.activeColor];
     
     // Calculate the delta if the gesture is still occurring, otherwise reset delta values
     // Handling delta values in this way prevents a second gesture resulting in an abrupt change in the background color
@@ -145,12 +142,12 @@
 }
 
 - (void)closeCameraButtonTap {
-    self.pickerView.state = ColorPickerStateTouch;
+    self.pickerView.state = ColorPickerStateCameraClosing;
     
     if(cameraSession && cameraSession.isRunning) {
         [cameraSession stopRunning];
-        cameraSession = nil;
     }
+    cameraSession = nil;
 }
 
 - (void)initializeCamera {
@@ -182,11 +179,11 @@
         [cameraSession startRunning];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            AVCaptureVideoPreviewLayer *previewLayer;
             previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:cameraSession];
             
-            // TODO attach preview layout to the pickerView
-            //self.cameraView.previewLayer = previewLayer;
-            self.pickerView.state = ColorPickerStateCamera;
+            self.pickerView.previewLayer = previewLayer;
+            self.pickerView.state = ColorPickerStateCameraOpening;
         });
     });
 }
@@ -220,7 +217,15 @@
     avgRed /= 100;
     
     UIColor *sampledColor = [UIColor colorWithRed:avgRed / 255.0f green:avgGreen / 255.0f blue:avgBlue / 255.0f alpha:1.0f];
-    self.pickerView.backgroundColor = sampledColor;
+    
+    CGFloat h, s, b;
+    [sampledColor getHue:&h saturation:&s brightness:&b alpha:NULL];
+    
+    self.activeColor.hue = [NSNumber numberWithFloat:h];
+    self.activeColor.saturation = [NSNumber numberWithFloat:s];
+    self.activeColor.brightness = [NSNumber numberWithFloat:b];
+    
+    [self.pickerView setPickedColor:self.activeColor];
 }
 
 /*

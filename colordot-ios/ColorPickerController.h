@@ -19,7 +19,6 @@
 
 @interface ColorPickerController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, UIGestureRecognizerDelegate> {
     AVCaptureSession *cameraSession;
-    AVCaptureVideoPreviewLayer *previewLayer;
 }
 
 @property (nonatomic, strong) ColorPickerView *pickerView;

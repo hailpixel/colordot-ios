@@ -7,6 +7,7 @@
 //
 
 #import "ColorPickerView.h"
+#import "Color.h"
 
 @implementation ColorPickerView
 
@@ -43,6 +44,7 @@
             break;
             
         case ColorPickerStateCameraOpening:
+            [self revealCamera];
             break;
             
         case ColorPickerStateCamera:
@@ -51,10 +53,103 @@
             break;
             
         case ColorPickerStateCameraClosing:
+            [self hideCamera];
             self.closeCameraButton.enabled = YES;
             self.closeCameraButton.hidden = NO;
             break;
     }
+}
+
+- (void)setPreviewLayer:(AVCaptureVideoPreviewLayer *)previewLayer {
+    if(self.previewLayer != nil) {
+        [self.previewLayer removeFromSuperlayer];
+    }
+    
+    _previewLayer = previewLayer;
+    
+    if(self.previewLayer) {
+        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        self.previewLayer.frame = self.bounds;
+        [self.layer insertSublayer:self.previewLayer below:self.hexLabel.layer];
+        [self setMask];
+    }
+}
+
+- (void)setPickedColor:(Color *)color {
+    self.backgroundColor = [color UIColor];
+    self.hexLabel.backgroundColor = [color UIColor];
+    self.hexLabel.text = [color hexString];
+    
+    if([color.hue floatValue] > .5) {
+        self.hexLabel.textColor = [UIColor blackColor];
+    } else {
+        self.hexLabel.textColor = [UIColor whiteColor];
+    }
+}
+
+#pragma mark - Mask setup and animation
+
+- (void)setMask {
+    CAShapeLayer *mask = [CAShapeLayer layer];
+    CGRect bounds = self.bounds;
+    
+    mask.frame = bounds;
+    mask.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(bounds.size.width / 2.0f, bounds.size.height / 2.0f, 0, 0)].CGPath;
+    mask.fillColor = [UIColor whiteColor].CGColor;
+    self.previewLayer.mask = mask;
+}
+
+- (void)revealCamera {
+    CAShapeLayer *mask = (CAShapeLayer *)self.previewLayer.mask;
+    CGRect bounds = mask.frame;
+    CGFloat diameter = MIN(bounds.size.width, bounds.size.height) - 20.0f;
+    CGPathRef oldPath = mask.path;
+    CGPathRef newPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(
+                                        (bounds.size.width - diameter) / 2.0f,
+                                        (bounds.size.height - diameter) / 2.0f,
+                                        diameter,
+                                        diameter)].CGPath;
+    
+    [CATransaction begin];
+    CABasicAnimation *revealAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    revealAnimation.fromValue = (__bridge id)oldPath;
+    revealAnimation.toValue = (__bridge id)newPath;
+    revealAnimation.duration = .4f;
+    revealAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+    
+    mask.path = newPath;
+    
+    [CATransaction setCompletionBlock:^{
+        self.state = ColorPickerStateCamera;
+    }];
+    
+    [mask addAnimation:revealAnimation forKey:@"revealAnimation"];
+    [CATransaction commit];
+}
+
+- (void)hideCamera {
+    CAShapeLayer *mask = (CAShapeLayer *)self.previewLayer.mask;
+    CGRect bounds = mask.frame;
+    CGPathRef oldPath = mask.path;
+    CGPathRef newPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(bounds.size.width / 2.0f, bounds.size.height / 2.0f, 0, 0)].CGPath;
+    
+    [CATransaction begin];
+    CABasicAnimation *revealAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    revealAnimation.fromValue = (__bridge id)oldPath;
+    revealAnimation.toValue = (__bridge id)newPath;
+    revealAnimation.duration = .3f;
+    revealAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+    
+    mask.path = newPath;
+    
+    [CATransaction setCompletionBlock:^{
+        self.previewLayer.mask = nil;
+        [self.previewLayer removeFromSuperlayer];
+        self.state = ColorPickerStateTouch;
+    }];
+    
+    [mask addAnimation:revealAnimation forKey:@"revealAnimation"];
+    [CATransaction commit];
 }
 
 #pragma mark - Private methods
