@@ -80,7 +80,7 @@
     self.hexLabel.backgroundColor = [color UIColor];
     self.hexLabel.text = [color hexString];
     
-    if([color.hue floatValue] > .5) {
+    if([color.brightness floatValue] > .5) {
         self.hexLabel.textColor = [UIColor blackColor];
     } else {
         self.hexLabel.textColor = [UIColor whiteColor];
