@@ -93,6 +93,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedPalette = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    self.selectedRow = indexPath;
     [self performSegueWithIdentifier:@"showPalette" sender:self];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }

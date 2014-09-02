@@ -15,10 +15,16 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
+                        <outlet property="delegate" destination="vAg-6C-p4u" id="lbp-Z9-2RB"/>
                         <segue destination="AGH-1Q-yGY" kind="relationship" relationship="rootViewController" id="enf-l5-cYh"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEw-Vh-0y5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="vAg-6C-p4u" customClass="NavigationControllerDelegate">
+                    <connections>
+                        <outlet property="navigationController" destination="KTZ-Iy-70x" id="tdv-da-UaM"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-1122" y="-321"/>
         </scene>

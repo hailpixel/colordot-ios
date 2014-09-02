@@ -16,6 +16,8 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic) NSIndexPath *selectedRow;
+
 - (IBAction)addAction:(id)sender;
 
 @end

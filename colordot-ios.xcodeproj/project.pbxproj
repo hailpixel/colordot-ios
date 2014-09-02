@@ -31,6 +31,8 @@
 		3B3BE028197903D300B9A222 /* Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3BE027197903D300B9A222 /* Color.m */; };
 		3B4907BE19547997007A6EA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4907BD19547997007A6EA6 /* Main.storyboard */; };
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
+		3B5748A619B5A5CA0026B1C0 /* NavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748A519B5A5CA0026B1C0 /* NavigationControllerDelegate.m */; };
+		3B5748A919B5A5D30026B1C0 /* Animator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748A819B5A5D30026B1C0 /* Animator.m */; };
 		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 		3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117319A68F950068DCF3 /* UIView+Clone.m */; };
@@ -82,6 +84,10 @@
 		3B4907BD19547997007A6EA6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3B4EC3BB195932E000D8AF8D /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerView.m; sourceTree = "<group>"; };
+		3B5748A419B5A5CA0026B1C0 /* NavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationControllerDelegate.h; sourceTree = "<group>"; };
+		3B5748A519B5A5CA0026B1C0 /* NavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationControllerDelegate.m; sourceTree = "<group>"; };
+		3B5748A719B5A5D30026B1C0 /* Animator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animator.h; sourceTree = "<group>"; };
+		3B5748A819B5A5D30026B1C0 /* Animator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animator.m; sourceTree = "<group>"; };
 		3B5B6005198270C000B6826D /* Color+Increments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Color+Increments.h"; sourceTree = "<group>"; };
 		3B5B6006198270C000B6826D /* Color+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Color+Increments.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
@@ -168,6 +174,7 @@
 				3B3BE02A1979050800B9A222 /* Palette Picker */,
 				3B4EC3BA1959309800D8AF8D /* Palette */,
 				3B3BE029197903EC00B9A222 /* Core Data Objects */,
+				3B5748A319B5A5B20026B1C0 /* Transition Animation */,
 				0311D348195454C5008369C0 /* colordot_ios.xcdatamodeld */,
 				0311D34B195454C5008369C0 /* Images.xcassets */,
 				0311D33D195454C5008369C0 /* Supporting Files */,
@@ -245,6 +252,17 @@
 				3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */,
 			);
 			name = Palette;
+			sourceTree = "<group>";
+		};
+		3B5748A319B5A5B20026B1C0 /* Transition Animation */ = {
+			isa = PBXGroup;
+			children = (
+				3B5748A419B5A5CA0026B1C0 /* NavigationControllerDelegate.h */,
+				3B5748A519B5A5CA0026B1C0 /* NavigationControllerDelegate.m */,
+				3B5748A719B5A5D30026B1C0 /* Animator.h */,
+				3B5748A819B5A5D30026B1C0 /* Animator.m */,
+			);
+			name = "Transition Animation";
 			sourceTree = "<group>";
 		};
 		3BAC62031958767C004D4B0D /* Categories */ = {
@@ -361,7 +379,9 @@
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
 				3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */,
 				3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */,
+				3B5748A919B5A5D30026B1C0 /* Animator.m in Sources */,
 				3B1B3B1A195D9ABA0095DCFF /* PaletteViewController.m in Sources */,
+				3B5748A619B5A5CA0026B1C0 /* NavigationControllerDelegate.m in Sources */,
 				3B3BE025197903D300B9A222 /* Palette.m in Sources */,
 				3BED71001978310200829417 /* PalettePickerViewController.m in Sources */,
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
