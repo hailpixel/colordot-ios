@@ -7,9 +7,6 @@
 //
 
 #import "Animator.h"
-#import "PalettePickerViewController.h"
-#import "UIView+Clone.h"
-#import "UIView+Shadow.h"
 
 @implementation Animator
 
@@ -21,29 +18,12 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    PalettePickerViewController *fromVC = (PalettePickerViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    
-    UITableView *tableView = fromVC.tableView;
-    NSIndexPath *selectedRow = fromVC.selectedRow;
-    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:selectedRow];
-    UIView *selectedCellView = [selectedCell clone];
-    selectedCell.alpha = 0;
-    selectedCellView.frame = [tableView convertRect:[tableView rectForRowAtIndexPath:selectedRow] toView:[tableView superview]];
-    [selectedCellView addShadow];
-    
-    [fromVC.view addSubview:selectedCellView];
-    
-    CGFloat xScale = fromVC.view.frame.size.width / selectedCellView.frame.size.height;
-    CGFloat yScale = fromVC.view.frame.size.height / selectedCellView.frame.size.width;
+    [[transitionContext containerView] addSubview:toVC.view];
+    toVC.view.alpha = 0;
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-        CGAffineTransform rotate = CGAffineTransformMakeRotation(M_PI/2);
-        CGAffineTransform scale = CGAffineTransformMakeScale(xScale, yScale);
-        selectedCellView.transform = CGAffineTransformConcat(rotate, scale);
-        selectedCellView.center = fromVC.view.center;
+        toVC.view.alpha = 1;
     } completion:^(BOOL finished) {
-        [selectedCellView removeFromSuperview];
-        [[transitionContext containerView] addSubview:toVC.view];
         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
 }

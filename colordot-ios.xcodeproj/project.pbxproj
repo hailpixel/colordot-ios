@@ -33,6 +33,8 @@
 		3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */; };
 		3B5748A619B5A5CA0026B1C0 /* NavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748A519B5A5CA0026B1C0 /* NavigationControllerDelegate.m */; };
 		3B5748A919B5A5D30026B1C0 /* Animator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748A819B5A5D30026B1C0 /* Animator.m */; };
+		3B5748AF19B6FDBA0026B1C0 /* PushAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748AE19B6FDBA0026B1C0 /* PushAnimator.m */; };
+		3B5748B219B6FDC70026B1C0 /* PopAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748B119B6FDC70026B1C0 /* PopAnimator.m */; };
 		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 		3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117319A68F950068DCF3 /* UIView+Clone.m */; };
@@ -88,6 +90,10 @@
 		3B5748A519B5A5CA0026B1C0 /* NavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationControllerDelegate.m; sourceTree = "<group>"; };
 		3B5748A719B5A5D30026B1C0 /* Animator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animator.h; sourceTree = "<group>"; };
 		3B5748A819B5A5D30026B1C0 /* Animator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animator.m; sourceTree = "<group>"; };
+		3B5748AD19B6FDBA0026B1C0 /* PushAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushAnimator.h; sourceTree = "<group>"; };
+		3B5748AE19B6FDBA0026B1C0 /* PushAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushAnimator.m; sourceTree = "<group>"; };
+		3B5748B019B6FDC70026B1C0 /* PopAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopAnimator.h; sourceTree = "<group>"; };
+		3B5748B119B6FDC70026B1C0 /* PopAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopAnimator.m; sourceTree = "<group>"; };
 		3B5B6005198270C000B6826D /* Color+Increments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Color+Increments.h"; sourceTree = "<group>"; };
 		3B5B6006198270C000B6826D /* Color+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Color+Increments.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
@@ -261,6 +267,10 @@
 				3B5748A519B5A5CA0026B1C0 /* NavigationControllerDelegate.m */,
 				3B5748A719B5A5D30026B1C0 /* Animator.h */,
 				3B5748A819B5A5D30026B1C0 /* Animator.m */,
+				3B5748AD19B6FDBA0026B1C0 /* PushAnimator.h */,
+				3B5748AE19B6FDBA0026B1C0 /* PushAnimator.m */,
+				3B5748B019B6FDC70026B1C0 /* PopAnimator.h */,
+				3B5748B119B6FDC70026B1C0 /* PopAnimator.m */,
 			);
 			name = "Transition Animation";
 			sourceTree = "<group>";
@@ -378,6 +388,7 @@
 				0311D347195454C5008369C0 /* AppDelegate.m in Sources */,
 				0311D34A195454C5008369C0 /* colordot_ios.xcdatamodeld in Sources */,
 				3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */,
+				3B5748AF19B6FDBA0026B1C0 /* PushAnimator.m in Sources */,
 				3B4EC3BD195932E000D8AF8D /* ColorPickerView.m in Sources */,
 				3B5748A919B5A5D30026B1C0 /* Animator.m in Sources */,
 				3B1B3B1A195D9ABA0095DCFF /* PaletteViewController.m in Sources */,
@@ -387,6 +398,7 @@
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3B3BE028197903D300B9A222 /* Color.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
+				3B5748B219B6FDC70026B1C0 /* PopAnimator.m in Sources */,
 				3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */,
 				3B5B6007198270C000B6826D /* Color+Increments.m in Sources */,
 			);
