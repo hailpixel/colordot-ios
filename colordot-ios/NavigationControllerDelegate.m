@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationController *navigationController;
 @property (strong, nonatomic) PushAnimator *pushAnimator;
 @property (strong, nonatomic) PopAnimator *popAnimator;
+
 @end
 
 @implementation NavigationControllerDelegate
@@ -24,8 +25,16 @@
 {
     if (operation == UINavigationControllerOperationPush && [fromVC isKindOfClass:[PalettePickerViewController class]]) {
         return self.pushAnimator;
-//    } else if (operation == UINavigationControllerOperationPop && [toVC isKindOfClass:[PalettePickerViewController class]]) {
-//        return self.popAnimator;
+    } else if (operation == UINavigationControllerOperationPop && [toVC isKindOfClass:[PalettePickerViewController class]]) {
+        return self.popAnimator;
+    }
+    return nil;
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
+{
+    if ([animationController isKindOfClass:[PopAnimator class]]) {
+        return self.interactionController;
     }
     return nil;
 }

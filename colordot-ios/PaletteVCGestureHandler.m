@@ -8,6 +8,7 @@
 
 #import "PaletteVCGestureHandler.h"
 #import "PaletteViewController.h"
+#import "NavigationControllerDelegate.h"
 
 #import "Palette.h"
 #import "Color.h"
@@ -19,6 +20,7 @@
 @property CGFloat xLagged;
 @property CGFloat yLagged;
 @property UIView *reorderingCellView;
+@property NavigationControllerDelegate *navigationControllerDelegate;
 
 @end
 
@@ -30,6 +32,7 @@
     if (self) {
         self.paletteVC = paletteVC;
         self.tableView = paletteVC.tableView;
+        self.navigationControllerDelegate = self.paletteVC.navigationController.delegate;
     }
     return self;
 }
@@ -113,7 +116,22 @@
 #pragma mark - Swipe to go back
 - (void)respondToScreenEdge:(UIScreenEdgePanGestureRecognizer *)screenEdgeRecognizer
 {
-    [self.paletteVC.navigationController popViewControllerAnimated:YES];
+    CGFloat x = [screenEdgeRecognizer locationInView:self.paletteVC.view.superview].x;
+    if (screenEdgeRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.navigationControllerDelegate.interactionController = [[UIPercentDrivenInteractiveTransition alloc] init];
+        [self.paletteVC.navigationController popViewControllerAnimated:YES];
+    } else if (screenEdgeRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGFloat progress = x / self.paletteVC.view.bounds.size.width;
+        [self.navigationControllerDelegate.interactionController updateInteractiveTransition:progress];
+    } else if (screenEdgeRecognizer.state == UIGestureRecognizerStateEnded) {
+        if (self.xLagged < x - 5 || x > (self.paletteVC.view.bounds.size.width / 2)) {
+            [self.navigationControllerDelegate.interactionController finishInteractiveTransition];
+        } else {
+            [self.navigationControllerDelegate.interactionController cancelInteractiveTransition];
+        }
+    }
+    
+    self.xLagged = x;
 }
 
 #pragma mark - Tap and hold to reorder
