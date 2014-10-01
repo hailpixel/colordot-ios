@@ -156,88 +156,94 @@
 #pragma mark - Tap and hold to reorder
 - (void)respondToLongPress:(UILongPressGestureRecognizer *)longPressRecognizer
 {
-    PaletteViewController *pvc = self.paletteVC;
-    UITableView *tableView = self.tableView;
-    CGPoint touchPoint = [longPressRecognizer locationInView:tableView];
-    CGFloat x = touchPoint.x;
-    CGFloat y = touchPoint.y;
+    CGPoint touchPoint = [longPressRecognizer locationInView:self.tableView];
     
     if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
-        // grab reordering cell
-        pvc.reorderingCellIndexPath = nil;
-        NSUInteger rowCount = pvc.colorsArray.count;
-        int row = 0;
-        while (pvc.reorderingCellIndexPath == nil) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            CGRect tableViewRect = [tableView rectForRowAtIndexPath:indexPath];
-            
-            if (CGRectContainsPoint(tableViewRect, touchPoint)) pvc.reorderingCellIndexPath = indexPath;
-            else row++;
-            
-            if (row >= rowCount) {
-                NSLog(@"Did not find touch.");
-                abort();
-            }
-        }
-        
-        // add clone view to tableView
-        UITableViewCell *reorderingCell = [tableView cellForRowAtIndexPath:pvc.reorderingCellIndexPath];
-        CGRect reorderingCellRect = [tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
-        
-        self.reorderingCellView = [reorderingCell clone];
-        self.reorderingCellView.frame = reorderingCellRect;
-        [self.reorderingCellView addShadow];
-        
-        [tableView addSubview:self.reorderingCellView];
-
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.reorderingCellView setTransform:CGAffineTransformMakeScale(1.2f, 1.2f)];
-        }];
-        
-        [tableView reloadData];
+        [self.paletteVC setReorderingCellIndexPathForTouchPoint:touchPoint];
+        [self instantiateCloneFromReorderingCell];
     } else if (longPressRecognizer.state == UIGestureRecognizerStateChanged) {
-        CGFloat xDelta = x - self.xLagged;
-        CGFloat yDelta = y - self.yLagged;
+        [self moveReorderingCellViewWithTouchPoint:touchPoint];
         
-        CGRect reorderingCellViewFrame = self.reorderingCellView.frame;
-        reorderingCellViewFrame.origin.x += xDelta;
-        reorderingCellViewFrame.origin.y += yDelta;
-        self.reorderingCellView.frame = reorderingCellViewFrame;
-        
-        CGRect reorderingCellFrame = [tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
+        CGRect reorderingCellFrame = [self.tableView rectForRowAtIndexPath:self.paletteVC.reorderingCellIndexPath];
         if (!CGRectContainsPoint(reorderingCellFrame, touchPoint)) {
-            NSInteger shift = y < reorderingCellFrame.origin.y ? -1 : 1;
-            NSIndexPath *oldIndexPath = pvc.reorderingCellIndexPath;
-            NSUInteger index = oldIndexPath.row;
-            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(index + shift) inSection:0];
-
-            Color *movingColor = pvc.colorsArray[index];
-            Color *displacedColor = pvc.colorsArray[index + shift];
-            
-            [tableView beginUpdates];
-            movingColor.order = [NSNumber numberWithInteger:(index + shift)];
-            displacedColor.order = [NSNumber numberWithInteger:index];
-            [pvc saveContext];
-            
-            [tableView moveRowAtIndexPath:newIndexPath toIndexPath:oldIndexPath]; // new to old because cell being moved goes "over" cell being displaced
-            pvc.reorderingCellIndexPath = newIndexPath;
-            [tableView endUpdates];
+            NSInteger shift = touchPoint.y < reorderingCellFrame.origin.y ? -1 : 1;
+            [self changeReorderingCellInTableViewWithShift:shift];
         }
     } else if (longPressRecognizer.state == UIGestureRecognizerStateEnded) {
-        CGRect movedCellFrame = [tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
-        pvc.reorderingCellIndexPath = nil;
-        [UIView animateWithDuration:0.2 animations:^{
-            // TODO (Colin): convert this animation to a CGAffineTransformIdentity and center the clone view over the moved cell, to fix the hexLabel not resizing with the view.
-            self.reorderingCellView.frame = movedCellFrame;
-        } completion:^(BOOL finished) {
-            [self.reorderingCellView removeFromSuperview];
-            self.reorderingCellView = nil;
-            [tableView reloadData];
-        }];
+        [self dismissReorderingCellClone];
     }
     
-    self.xLagged = x;
-    self.yLagged = y;
+    self.xLagged = touchPoint.x;
+    self.yLagged = touchPoint.y;
+}
+
+- (void)instantiateCloneFromReorderingCell
+{
+    PaletteViewController *pvc = self.paletteVC;
+    
+    UITableViewCell *reorderingCell = [self.tableView cellForRowAtIndexPath:pvc.reorderingCellIndexPath];
+    CGRect reorderingCellRect = [self.tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
+    
+    self.reorderingCellView = [reorderingCell clone];
+    self.reorderingCellView.frame = reorderingCellRect;
+    [self.reorderingCellView addShadow];
+    
+    [self.tableView addSubview:self.reorderingCellView];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.reorderingCellView setTransform:CGAffineTransformMakeScale(1.2f, 1.2f)];
+    }];
+    
+    [self.tableView reloadData];
+}
+
+- (void)moveReorderingCellViewWithTouchPoint:(CGPoint)touchPoint
+{
+    CGFloat xDelta = touchPoint.x - self.xLagged;
+    CGFloat yDelta = touchPoint.y - self.yLagged;
+    
+    CGRect reorderingCellViewFrame = self.reorderingCellView.frame;
+    reorderingCellViewFrame.origin.x += xDelta;
+    reorderingCellViewFrame.origin.y += yDelta;
+    self.reorderingCellView.frame = reorderingCellViewFrame;
+}
+
+- (void)changeReorderingCellInTableViewWithShift:(int)shift
+{
+    PaletteViewController *pvc = self.paletteVC;
+    
+    NSIndexPath *oldIndexPath = pvc.reorderingCellIndexPath;
+    NSUInteger index = oldIndexPath.row;
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(index + shift) inSection:0];
+    
+    Color *movingColor = pvc.colorsArray[index];
+    Color *displacedColor = pvc.colorsArray[index + shift];
+    
+    [self.tableView beginUpdates];
+    movingColor.order = [NSNumber numberWithInteger:(index + shift)];
+    displacedColor.order = [NSNumber numberWithInteger:index];
+    [pvc saveContext];
+    
+    [self.tableView moveRowAtIndexPath:newIndexPath toIndexPath:oldIndexPath]; // new to old because cell being moved goes "over" cell being displaced
+    pvc.reorderingCellIndexPath = newIndexPath;
+    [self.tableView endUpdates];
+}
+
+- (void)dismissReorderingCellClone
+{
+    PaletteViewController *pvc = self.paletteVC;
+    
+    CGRect movedCellFrame = [self.tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
+    [UIView animateWithDuration:0.2 animations:^{
+        // TODO (Colin): convert this animation to a CGAffineTransformIdentity and center the clone view over the moved cell, to fix the hexLabel not resizing with the view.
+        self.reorderingCellView.frame = movedCellFrame;
+    } completion:^(BOOL finished) {
+        [self.reorderingCellView removeFromSuperview];
+        self.reorderingCellView = nil;
+        [self.tableView reloadData];
+    }];
+    
+    pvc.reorderingCellIndexPath = nil;
 }
 
 

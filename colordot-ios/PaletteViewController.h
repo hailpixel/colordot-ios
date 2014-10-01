@@ -29,4 +29,6 @@
 - (void)growDragUpViewByValue:(CGFloat)size;
 - (void)saveContext;
 
+- (void)setReorderingCellIndexPathForTouchPoint:(CGPoint)touchPoint;
+
 @end

@@ -317,4 +317,24 @@
     [self.tableView endUpdates];
 }
 
+#pragma mark Tap and hold to reorder management
+- (void)setReorderingCellIndexPathForTouchPoint:(CGPoint)touchPoint
+{
+    self.reorderingCellIndexPath = nil;
+    NSUInteger rowCount = self.colorsArray.count;
+    int row = 0;
+    while (self.reorderingCellIndexPath == nil) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        CGRect tableViewRect = [self.tableView rectForRowAtIndexPath:indexPath];
+        
+        if (CGRectContainsPoint(tableViewRect, touchPoint)) self.reorderingCellIndexPath = indexPath;
+        else row++;
+        
+        if (row >= rowCount) {
+            NSLog(@"Bad touch!");
+            break;
+        }
+    }
+}
+
 @end
