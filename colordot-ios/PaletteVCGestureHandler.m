@@ -233,10 +233,10 @@
 {
     PaletteViewController *pvc = self.paletteVC;
     
-    CGRect movedCellFrame = [self.tableView rectForRowAtIndexPath:pvc.reorderingCellIndexPath];
+    UITableViewCell *movedCell = [self.tableView cellForRowAtIndexPath:pvc.reorderingCellIndexPath];
     [UIView animateWithDuration:0.2 animations:^{
-        // TODO (Colin): convert this animation to a CGAffineTransformIdentity and center the clone view over the moved cell, to fix the hexLabel not resizing with the view.
-        self.reorderingCellView.frame = movedCellFrame;
+        self.reorderingCellView.center = movedCell.center;
+        [self.reorderingCellView setTransform:CGAffineTransformIdentity];
     } completion:^(BOOL finished) {
         [self.reorderingCellView removeFromSuperview];
         self.reorderingCellView = nil;
