@@ -125,13 +125,11 @@
 
 - (void)respondToTap
 {
-    NSLog(@"colorPickerController respondToTap began");
     [self.delegate colorPickerController:self didPickColor:self.pickerView.backgroundColor];
     if(cameraSession) {
         [cameraSession stopRunning];
         
     }
-    NSLog(@"colorPickerController respondToTap ending");
 }
 
 #pragma mark - Camera methods
@@ -151,7 +149,6 @@
 }
 
 - (void)initializeCamera {
-    NSLog(@"colorPickerController initializeCamera began");
     cameraSession = [[AVCaptureSession alloc] init];
     cameraSession.sessionPreset = AVCaptureSessionPresetPhoto;
     

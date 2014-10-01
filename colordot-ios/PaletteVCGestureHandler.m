@@ -38,79 +38,98 @@
 }
 
 #pragma mark - Drag up to add
-// TODO (Colin): refactor this unholy abomination (helper methods)
 - (void)respondToPan:(UIGestureRecognizer *)gestureRecognizer;
 {
     CGFloat y = [gestureRecognizer locationInView:self.paletteVC.view].y;
-    PaletteViewController *pvc = self.paletteVC;
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [UIView setAnimationsEnabled:NO];
-        
-        self.color = [NSEntityDescription insertNewObjectForEntityForName:@"Color" inManagedObjectContext:pvc.managedObjectContext];
-        [self.color randomValues];
-        self.color.order = [NSNumber numberWithUnsignedInteger:pvc.colorsArray.count];
-        
-        self.dragUpView.backgroundColor = self.color.UIColor;
-        
-        [pvc growDragUpViewByValue:42];
-        [pvc.view bringSubviewToFront:pvc.pullButton];
+        [self prepareColorAndDragUpViewForPaletteViewController:self.paletteVC];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat yDelta = y - self.yLagged;
         
-        [pvc growDragUpViewByValue:-yDelta];
-        
-        CGRect buttonFrame = pvc.pullButton.frame;
-        buttonFrame.origin.y += yDelta;
-        pvc.pullButton.frame = buttonFrame;
+        [self updateDragToAddActionByValue:yDelta forPaletteViewController:self.paletteVC];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         CGFloat height = self.dragUpView.frame.size.height;
-        pvc.pullButton.hidden = YES;
+        self.paletteVC.pullButton.hidden = YES;
         
-        if (height > ((3.0f / 8.0f) * pvc.view.bounds.size.height)) {
-            [UIView setAnimationsEnabled:YES];
-            
-            CGFloat viewHeight = pvc.view.bounds.size.height;
-            CGFloat viewWidth = pvc.view.bounds.size.width;
-            CGFloat newHeight = viewHeight - (pvc.colorsArray.count * ROUNDUPHALF(0.2f * (viewHeight - viewWidth)));
-            
-            [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                [pvc growDragUpViewByValue:(newHeight - self.dragUpView.frame.size.height)];
-            } completion:^(BOOL finished) {
-                [UIView setAnimationsEnabled:NO];
-                
-                [self.tableView beginUpdates];
-                
-                [pvc.palette addColorsObject:self.color];
-                [pvc saveContext];
-                
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(pvc.colorsArray.count - 1) inSection:0];
-                [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-                [self.tableView endUpdates];
-                
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                [pvc tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-                
-                [pvc growDragUpViewByValue:-newHeight];
-                
-                [UIView setAnimationsEnabled:YES];
-            }];
+        if (height > ((3.0f / 8.0f) * self.paletteVC.view.bounds.size.height)) {
+            [self completeDragToAddActionFromHeight:height forPaletteViewController:self.paletteVC];
         } else {
-            [UIView setAnimationsEnabled:YES];
-            [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                [pvc growDragUpViewByValue:-height];
-            } completion:^(BOOL finished) {
-                pvc.pullButton.hidden = NO;
-                self.color = nil;
-            }];
+            [self dismissDragUpActionFromHeight:height forPaletteViewController:self.paletteVC];
         }
         
-        CGRect buttonFrame = pvc.pullButton.frame;
+        UIButton *pullButton = self.paletteVC.pullButton;
+        CGRect buttonFrame = pullButton.frame;
         buttonFrame.origin.y += (height - 42);
-        pvc.pullButton.frame = buttonFrame;
+        pullButton.frame = buttonFrame;
     }
     
     self.yLagged = y;
+}
+
+- (void)prepareColorAndDragUpViewForPaletteViewController:(PaletteViewController *)pvc
+{
+    [UIView setAnimationsEnabled:NO];
+
+    self.color = [NSEntityDescription insertNewObjectForEntityForName:@"Color" inManagedObjectContext:pvc.managedObjectContext];
+    [self.color randomValues];
+    self.color.order = [NSNumber numberWithUnsignedInteger:pvc.colorsArray.count];
+    
+    self.dragUpView.backgroundColor = self.color.UIColor;
+    
+    [pvc growDragUpViewByValue:42];
+    [pvc.view bringSubviewToFront:pvc.pullButton];
+}
+
+- (void)updateDragToAddActionByValue:(CGFloat)yDelta forPaletteViewController:(PaletteViewController *)pvc
+{
+    [pvc growDragUpViewByValue:-yDelta];
+    
+    CGRect buttonFrame = pvc.pullButton.frame;
+    buttonFrame.origin.y += yDelta;
+    pvc.pullButton.frame = buttonFrame;
+}
+
+- (void)completeDragToAddActionFromHeight:(CGFloat)height forPaletteViewController:(PaletteViewController *)pvc
+{
+    [UIView setAnimationsEnabled:YES];
+    
+    CGFloat viewHeight = pvc.view.bounds.size.height;
+    CGFloat viewWidth = pvc.view.bounds.size.width;
+    CGFloat newHeight = viewHeight - (pvc.colorsArray.count * ROUNDUPHALF(0.2f * (viewHeight - viewWidth)));
+    
+    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [pvc growDragUpViewByValue:(newHeight - self.dragUpView.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [UIView setAnimationsEnabled:NO];
+        
+        [self.tableView beginUpdates];
+        
+        [pvc.palette addColorsObject:self.color];
+        [pvc saveContext];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(pvc.colorsArray.count - 1) inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.tableView endUpdates];
+        
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [pvc tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        
+        [pvc growDragUpViewByValue:-newHeight];
+        
+        [UIView setAnimationsEnabled:YES];
+    }];
+}
+
+- (void)dismissDragUpActionFromHeight:(CGFloat)height forPaletteViewController:(PaletteViewController *)pvc
+{
+    [UIView setAnimationsEnabled:YES];
+    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [pvc growDragUpViewByValue:-height];
+    } completion:^(BOOL finished) {
+        pvc.pullButton.hidden = NO;
+        self.color = nil;
+    }];
 }
 
 #pragma mark - Swipe to go back
