@@ -32,7 +32,7 @@
     if (self) {
         self.paletteVC = paletteVC;
         self.tableView = paletteVC.tableView;
-        self.navigationControllerDelegate = self.paletteVC.navigationController.delegate;
+        self.navigationControllerDelegate = paletteVC.navigationController.delegate;
     }
     return self;
 }
@@ -43,17 +43,17 @@
     CGFloat y = [gestureRecognizer locationInView:self.paletteVC.view].y;
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self prepareColorAndDragUpViewForPaletteViewController:self.paletteVC];
+        [self prepareColorAndDragUpView];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat yDelta = y - self.yLagged;
         
-        [self updateDragToAddActionByValue:yDelta forPaletteViewController:self.paletteVC];
+        [self updateDragToAddActionByValue:yDelta];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         CGFloat height = self.dragUpView.frame.size.height;
         self.paletteVC.pullButton.hidden = YES;
         
         if (height > ((3.0f / 8.0f) * self.paletteVC.view.bounds.size.height)) {
-            [self completeDragToAddActionFromHeight:height forPaletteViewController:self.paletteVC];
+            [self completeDragToAddActionFromHeight:height];
         } else {
             [self dismissDragUpActionFromHeight:height forPaletteViewController:self.paletteVC];
         }
@@ -67,10 +67,12 @@
     self.yLagged = y;
 }
 
-- (void)prepareColorAndDragUpViewForPaletteViewController:(PaletteViewController *)pvc
+- (void)prepareColorAndDragUpView
 {
-    [UIView setAnimationsEnabled:NO];
+    [UIView setAnimationsEnabled:NO];   // Let view updates occur real-time with user input
 
+    PaletteViewController *pvc = self.paletteVC;
+    
     self.color = [NSEntityDescription insertNewObjectForEntityForName:@"Color" inManagedObjectContext:pvc.managedObjectContext];
     [self.color randomValues];
     self.color.order = [NSNumber numberWithUnsignedInteger:pvc.colorsArray.count];
@@ -81,8 +83,10 @@
     [pvc.view bringSubviewToFront:pvc.pullButton];
 }
 
-- (void)updateDragToAddActionByValue:(CGFloat)yDelta forPaletteViewController:(PaletteViewController *)pvc
+- (void)updateDragToAddActionByValue:(CGFloat)yDelta
 {
+    PaletteViewController *pvc = self.paletteVC;
+
     [pvc growDragUpViewByValue:-yDelta];
     
     CGRect buttonFrame = pvc.pullButton.frame;
@@ -90,9 +94,11 @@
     pvc.pullButton.frame = buttonFrame;
 }
 
-- (void)completeDragToAddActionFromHeight:(CGFloat)height forPaletteViewController:(PaletteViewController *)pvc
+- (void)completeDragToAddActionFromHeight:(CGFloat)height
 {
     [UIView setAnimationsEnabled:YES];
+
+    PaletteViewController *pvc = self.paletteVC;
     
     CGFloat viewHeight = pvc.view.bounds.size.height;
     CGFloat viewWidth = pvc.view.bounds.size.width;
