@@ -214,7 +214,7 @@
     self.reorderingCellView.frame = reorderingCellViewFrame;
 }
 
-- (void)changeReorderingCellInTableViewWithShift:(int)shift
+- (void)changeReorderingCellInTableViewWithShift:(NSInteger)shift
 {
     PaletteViewController *pvc = self.paletteVC;
     
