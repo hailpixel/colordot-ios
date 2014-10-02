@@ -80,11 +80,12 @@
     self.hexLabel.backgroundColor = [color UIColor];
     self.hexLabel.text = [color hexString];
     
-    if([color.brightness floatValue] > .5) {
-        self.hexLabel.textColor = [UIColor blackColor];
-    } else {
-        self.hexLabel.textColor = [UIColor whiteColor];
-    }
+    CGFloat hue, saturation, brightness;
+    [[color UIColor] getHue:&hue saturation:&saturation brightness:&brightness alpha:NULL];
+
+    brightness = 1.0f - (brightness / 2.0);
+    saturation = 1.0f - (saturation / 2.0);
+    self.hexLabel.textColor = [UIColor colorWithHue:HUEINVERSE(hue) saturation:saturation brightness:brightness alpha:1.0];
 }
 
 #pragma mark - Mask setup and animation
@@ -155,15 +156,12 @@
 #pragma mark - Private methods
 - (void)initializeInterface
 {
-    CGFloat inset = (self.bounds.size.width / 2.0f) - 50.0f;
-    UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 100.0f, 100.0f)];
-    
-    hexLabel.clipsToBounds = YES;
-    hexLabel.layer.cornerRadius = 50.0f;
-    hexLabel.backgroundColor = [UIColor blackColor];
-    hexLabel.alpha = 0.63f;
+    CGFloat inset = (self.bounds.size.width / 2.0f) - 100.0f;
+    UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 200.0f, 200.0f)];
+    hexLabel.font = [UIFont fontWithName:@"Helvetica" size:28.0];
     hexLabel.textColor = [UIColor whiteColor];
     hexLabel.text = @"#XXYYZZ";
+    
     hexLabel.textAlignment = NSTextAlignmentCenter;
     
     [self addSubview:hexLabel];

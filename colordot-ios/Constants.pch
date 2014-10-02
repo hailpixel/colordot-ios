@@ -12,7 +12,9 @@
 #define WHITEHSB [UIColor colorWithHue:0.0f saturation:0.0f brightness:1.0f alpha:1.0f]
 #define BLACKHSB [UIColor colorWithHue:0.0f saturation:0.0f brightness:0.0f alpha:1.0f]
 
-#define RANDUNIFORM ((float)arc4random_uniform(2^100))/(2^100)
-#define ROUNDUPHALF(a) round(2.0f * a + 1)/2.0f
+#define HUEINVERSE(hue) ((int)((hue * 100.0) + 50.0) % 100) / 100.0
+
+#define RANDUNIFORM ((float)arc4random_uniform(2^100)) / (2^100)
+#define ROUNDUPHALF(a) round(2.0f * a + 1) / 2.0f
 
 #endif
