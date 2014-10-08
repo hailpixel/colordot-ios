@@ -8,6 +8,7 @@
 
 #import "ColorPickerView.h"
 #import "Color.h"
+#import "Color+ReadableTextColor.h"
 
 @implementation ColorPickerView
 
@@ -77,15 +78,11 @@
 
 - (void)setPickedColor:(Color *)color {
     self.backgroundColor = [color UIColor];
-    self.hexLabel.backgroundColor = [color UIColor];
     self.hexLabel.text = [color hexString];
     
-    CGFloat hue, saturation, brightness;
-    [[color UIColor] getHue:&hue saturation:&saturation brightness:&brightness alpha:NULL];
-
-    brightness = 1.0f - (brightness / 2.0);
-    saturation = 1.0f - (saturation / 2.0);
-    self.hexLabel.textColor = [UIColor colorWithHue:HUEINVERSE(hue) saturation:saturation brightness:brightness alpha:1.0];
+    self.hexLabel.textColor = color.readableTextColor;
+    if (self.openCameraButton) self.openCameraButton.titleLabel.textColor = color.readableTextColor;
+    if (self.closeCameraButton) self.closeCameraButton.titleLabel.textColor = color.readableTextColor;
 }
 
 #pragma mark - Mask setup and animation
@@ -160,6 +157,7 @@
     UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 200.0f, 200.0f)];
     hexLabel.font = [UIFont fontWithName:@"Helvetica" size:28.0];
     hexLabel.textColor = [UIColor whiteColor];
+    hexLabel.backgroundColor = [UIColor clearColor];
     hexLabel.text = @"#XXYYZZ";
     
     hexLabel.textAlignment = NSTextAlignmentCenter;

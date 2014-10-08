@@ -12,6 +12,7 @@
 
 #import "Palette.h"
 #import "Color.h"
+#import "Color+ReadableTextColor.h"
 
 @interface PaletteViewController ()
 
@@ -103,7 +104,7 @@
         Color *cellColor = self.colorsArray[index];
         cell.backgroundColor = [cellColor UIColor];
         cell.textLabel.text = cellColor.hexString;
-        cell.textLabel.textColor = [self whiteOrBlackWithColor:cell.backgroundColor];
+        cell.textLabel.textColor = cellColor.readableTextColor;
     }
 }
 
@@ -256,18 +257,9 @@
 
 
 #pragma mark - Private methods
-- (UIColor *)whiteOrBlackWithColor:(UIColor *)color
-{
-    CGFloat brightness = 0.0f;
-    [color getHue:NULL saturation:NULL brightness:&brightness alpha:NULL];
-    
-    if (brightness > 0.8f) return [UIColor blackColor];
-    return [UIColor whiteColor];
-}
-
 - (void)updateButton
 {
-    UIColor *color = [self whiteOrBlackWithColor:[[self.colorsArray objectAtIndex:(self.colorsArray.count - 1)] UIColor]];
+    UIColor *color = ((Color *)self.colorsArray[self.colorsArray.count - 1]).readableTextColor;
     self.pullButton.tintColor = [color colorWithAlphaComponent:0.63f];
 }
 

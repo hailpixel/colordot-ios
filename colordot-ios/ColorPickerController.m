@@ -63,6 +63,8 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTap)];
     [self.pickerView addGestureRecognizer:tapRecognizer];
     
+    [self.pickerView setPickedColor:self.activeColor];
+    
     self.view = self.pickerView;
 }
 
@@ -119,7 +121,7 @@
     ColorPickerView *cpv = self.pickerView;
     
     [self.activeColor cho_colorWithChangeToSaturation:(gestureRecognizer.velocity * 0.005f)];
-    cpv.backgroundColor = self.activeColor.UIColor;
+    [cpv setPickedColor: self.activeColor];
     cpv.hexLabel.text = self.activeColor.hexString;
 }
 
@@ -128,7 +130,6 @@
     [self.delegate colorPickerController:self didPickColor:self.pickerView.backgroundColor];
     if(cameraSession) {
         [cameraSession stopRunning];
-        
     }
 }
 

@@ -36,6 +36,7 @@
 		3B5748AF19B6FDBA0026B1C0 /* PushAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748AE19B6FDBA0026B1C0 /* PushAnimator.m */; };
 		3B5748B219B6FDC70026B1C0 /* PopAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748B119B6FDC70026B1C0 /* PopAnimator.m */; };
 		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
+		3B642F9D19E5059B00212EA3 /* Color+ReadableTextColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 		3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117319A68F950068DCF3 /* UIView+Clone.m */; };
 		3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117919A69B0F0068DCF3 /* UIView+Shadow.m */; };
@@ -96,6 +97,8 @@
 		3B5748B119B6FDC70026B1C0 /* PopAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopAnimator.m; sourceTree = "<group>"; };
 		3B5B6005198270C000B6826D /* Color+Increments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Color+Increments.h"; sourceTree = "<group>"; };
 		3B5B6006198270C000B6826D /* Color+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Color+Increments.m"; sourceTree = "<group>"; };
+		3B642F9B19E5059B00212EA3 /* Color+ReadableTextColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Color+ReadableTextColor.h"; path = "../Color+ReadableTextColor.h"; sourceTree = "<group>"; };
+		3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Color+ReadableTextColor.m"; path = "../Color+ReadableTextColor.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
 		3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteVCGestureHandler.m; sourceTree = "<group>"; };
 		3BC4117219A68F950068DCF3 /* UIView+Clone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Clone.h"; sourceTree = "<group>"; };
@@ -280,6 +283,8 @@
 			children = (
 				3B5B6005198270C000B6826D /* Color+Increments.h */,
 				3B5B6006198270C000B6826D /* Color+Increments.m */,
+				3B642F9B19E5059B00212EA3 /* Color+ReadableTextColor.h */,
+				3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */,
 				3BC4117219A68F950068DCF3 /* UIView+Clone.h */,
 				3BC4117319A68F950068DCF3 /* UIView+Clone.m */,
 				3BC4117819A69B0F0068DCF3 /* UIView+Shadow.h */,
@@ -398,6 +403,7 @@
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3B3BE028197903D300B9A222 /* Color.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
+				3B642F9D19E5059B00212EA3 /* Color+ReadableTextColor.m in Sources */,
 				3B5748B219B6FDC70026B1C0 /* PopAnimator.m in Sources */,
 				3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */,
 				3B5B6007198270C000B6826D /* Color+Increments.m in Sources */,
