@@ -81,8 +81,8 @@
     self.hexLabel.text = [color hexString];
     
     self.hexLabel.textColor = color.readableTextColor;
-    if (self.openCameraButton) self.openCameraButton.titleLabel.textColor = color.readableTextColor;
-    if (self.closeCameraButton) self.closeCameraButton.titleLabel.textColor = color.readableTextColor;
+    [self.openCameraButton setTitleColor:color.readableTextColor forState:UIControlStateNormal];
+    [self.closeCameraButton setTitleColor:color.readableTextColor forState:UIControlStateNormal];
 }
 
 #pragma mark - Mask setup and animation
@@ -155,7 +155,7 @@
 {
     CGFloat inset = (self.bounds.size.width / 2.0f) - 100.0f;
     UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 200.0f, 200.0f)];
-    hexLabel.font = [UIFont fontWithName:@"Helvetica" size:28.0];
+    hexLabel.font = [UIFont fontWithName:@"Helvetica" size:22.0];
     hexLabel.textColor = [UIColor whiteColor];
     hexLabel.backgroundColor = [UIColor clearColor];
     hexLabel.text = @"#XXYYZZ";
