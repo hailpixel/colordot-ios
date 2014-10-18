@@ -37,6 +37,7 @@
 		3B5748B219B6FDC70026B1C0 /* PopAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5748B119B6FDC70026B1C0 /* PopAnimator.m */; };
 		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
 		3B642F9D19E5059B00212EA3 /* Color+ReadableTextColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */; };
+		3B9942B319F23F6400378950 /* UILocationAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9942B219F23F6400378950 /* UILocationAxis.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 		3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117319A68F950068DCF3 /* UIView+Clone.m */; };
 		3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117919A69B0F0068DCF3 /* UIView+Shadow.m */; };
@@ -99,6 +100,8 @@
 		3B5B6006198270C000B6826D /* Color+Increments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Color+Increments.m"; sourceTree = "<group>"; };
 		3B642F9B19E5059B00212EA3 /* Color+ReadableTextColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Color+ReadableTextColor.h"; path = "../Color+ReadableTextColor.h"; sourceTree = "<group>"; };
 		3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Color+ReadableTextColor.m"; path = "../Color+ReadableTextColor.m"; sourceTree = "<group>"; };
+		3B9942B119F23F6400378950 /* UILocationAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILocationAxis.h; path = "colordot-ios/UILocationAxis.h"; sourceTree = "<group>"; };
+		3B9942B219F23F6400378950 /* UILocationAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UILocationAxis.m; path = "colordot-ios/UILocationAxis.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
 		3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteVCGestureHandler.m; sourceTree = "<group>"; };
 		3BC4117219A68F950068DCF3 /* UIView+Clone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Clone.h"; sourceTree = "<group>"; };
@@ -228,6 +231,7 @@
 				3B4EC3BC195932E000D8AF8D /* ColorPickerView.m */,
 				03636E34195A253D00F05395 /* ColorPickerController.h */,
 				03636E35195A253D00F05395 /* ColorPickerController.m */,
+				3B9942B419F23F6C00378950 /* Location Axis */,
 			);
 			name = "Color Picker";
 			sourceTree = "<group>";
@@ -276,6 +280,16 @@
 				3B5748B119B6FDC70026B1C0 /* PopAnimator.m */,
 			);
 			name = "Transition Animation";
+			sourceTree = "<group>";
+		};
+		3B9942B419F23F6C00378950 /* Location Axis */ = {
+			isa = PBXGroup;
+			children = (
+				3B9942B119F23F6400378950 /* UILocationAxis.h */,
+				3B9942B219F23F6400378950 /* UILocationAxis.m */,
+			);
+			name = "Location Axis";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		3BAC62031958767C004D4B0D /* Categories */ = {
@@ -402,6 +416,7 @@
 				3BED71001978310200829417 /* PalettePickerViewController.m in Sources */,
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3B3BE028197903D300B9A222 /* Color.m in Sources */,
+				3B9942B319F23F6400378950 /* UILocationAxis.m in Sources */,
 				0311D343195454C5008369C0 /* main.m in Sources */,
 				3B642F9D19E5059B00212EA3 /* Color+ReadableTextColor.m in Sources */,
 				3B5748B219B6FDC70026B1C0 /* PopAnimator.m in Sources */,

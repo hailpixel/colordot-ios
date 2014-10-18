@@ -9,6 +9,7 @@
 #import "ColorPickerView.h"
 #import "Color.h"
 #import "Color+ReadableTextColor.h"
+#import "UILocationAxis.h"
 
 @implementation ColorPickerView
 
@@ -79,10 +80,14 @@
 - (void)setPickedColor:(Color *)color {
     self.backgroundColor = [color UIColor];
     self.hexLabel.text = [color hexString];
+//    self.hueSlider.value = color.hue.floatValue;
+    self.locationAxis.value = color.hue.floatValue;
     
-    self.hexLabel.textColor = color.readableTextColor;
-    [self.openCameraButton setTitleColor:color.readableTextColor forState:UIControlStateNormal];
-    [self.closeCameraButton setTitleColor:color.readableTextColor forState:UIControlStateNormal];
+    UIColor *textColor = color.readableTextColor;
+    self.hexLabel.textColor = textColor;
+    self.locationAxis.backgroundColor = textColor;
+    [self.openCameraButton setTitleColor:textColor forState:UIControlStateNormal];
+    [self.closeCameraButton setTitleColor:textColor forState:UIControlStateNormal];
 }
 
 #pragma mark - Mask setup and animation
@@ -153,17 +158,28 @@
 #pragma mark - Private methods
 - (void)initializeInterface
 {
-    CGFloat inset = (self.bounds.size.width / 2.0f) - 100.0f;
-    UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 200.0f, 200.0f)];
+    UILabel *hexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)];
     hexLabel.font = [UIFont fontWithName:@"Helvetica" size:22.0];
     hexLabel.textColor = [UIColor whiteColor];
     hexLabel.backgroundColor = [UIColor clearColor];
     hexLabel.text = @"#XXYYZZ";
-    
     hexLabel.textAlignment = NSTextAlignmentCenter;
     
     [self addSubview:hexLabel];
     self.hexLabel = hexLabel;
+    
+//    UISlider *hueSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 0, 50)];
+//    hueSlider.minimumValue = 0.0f;
+//    hueSlider.maximumValue = 1.0f;
+//    hueSlider.minimumTrackTintColor = WHITEHSB;
+//    hueSlider.maximumTrackTintColor = WHITEHSB;
+//    
+//    [self addSubview:hueSlider];
+//    self.hueSlider = hueSlider;
+    
+    UILocationAxis *locationAxis = [[UILocationAxis alloc] initWithFrame:CGRectMake(0, 0, 0, 24)];
+    [self addSubview:locationAxis];
+    self.locationAxis = locationAxis;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 100, 32);
@@ -185,6 +201,17 @@
 - (void)layoutInterface
 {
     self.hexLabel.center = self.center;
+    
+//    CGRect newHueSliderFrame = self.hueSlider.frame;
+//    newHueSliderFrame.size.width = self.bounds.size.width;
+//    self.hueSlider.frame = newHueSliderFrame;
+//    self.hueSlider.center = CGPointMake(self.center.x, 20.0f);
+    
+    CGRect locationAxisFrame = self.locationAxis.frame;
+    locationAxisFrame.size.width = self.bounds.size.width;
+    self.locationAxis.frame = locationAxisFrame;
+    self.locationAxis.center = CGPointMake(self.center.x, 20.0f);
+    
     self.openCameraButton.center = CGPointMake(self.center.x, self.bounds.size.height - 20.0f);
     self.closeCameraButton.center = self.openCameraButton.center;
 }

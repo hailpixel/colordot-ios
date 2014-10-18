@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 @class Color;
+@class UILocationAxis;
 
 @interface ColorPickerView : UIView
 
@@ -23,6 +24,7 @@ typedef enum {
 
 @property (nonatomic) ColorPickerState state;
 @property (weak, nonatomic) UILabel *hexLabel;
+@property (weak, nonatomic) UILocationAxis *locationAxis;
 
 @property (weak, nonatomic) UIButton *openCameraButton;
 @property (weak, nonatomic) UIButton *closeCameraButton;
