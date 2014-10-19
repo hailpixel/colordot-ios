@@ -162,10 +162,19 @@
 
 - (IBAction)shareButtonAction:(id)sender
 {
+    self.pullButton.hidden = YES;
+    self.shareButton.hidden = YES;
+    
     NSString *message = @"Check out this color palette:";
     NSString *urlString = [self.palette generateHailpixelURL].absoluteString;
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[message, urlString] applicationActivities:nil];
-    [self.navigationController presentViewController:activityViewController animated:YES completion:NULL];
+    UIImage *image = [self captureScreen];
+    NSArray *activityItems = @[message, urlString, image];
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    [self.navigationController presentViewController:activityViewController animated:YES completion:^{
+        self.pullButton.hidden = NO;
+        self.shareButton.hidden = NO;
+    }];
 }
 
 
@@ -276,6 +285,18 @@
     UIColor *color = ((Color *)self.colorsArray[self.colorsArray.count - 1]).readableTextColor;
     self.pullButton.tintColor = [color colorWithAlphaComponent:0.63f];
     self.shareButton.tintColor = [color colorWithAlphaComponent:0.63f];
+}
+
+-(UIImage *)captureScreen
+{
+    CALayer *layer = self.view.layer;
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    
+    [layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return screenImage;
 }
 
 #pragma mark Data management
