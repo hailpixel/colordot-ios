@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -139,6 +140,13 @@
                                     <action selector="pullButtonAction:" destination="kqY-KP-x8X" eventType="touchUpInside" id="qQm-Nn-dW0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6e-bj-hqV">
+                                <rect key="frame" x="288" y="536" width="22" height="22"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="shareButtonAction:" destination="kqY-KP-x8X" eventType="touchUpInside" id="56I-Lx-puc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -146,10 +154,13 @@
                             <constraint firstItem="UaU-lN-AhR" firstAttribute="top" secondItem="iCu-yn-rF9" secondAttribute="top" id="0ss-Fz-XK9"/>
                             <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="UaU-lN-AhR" secondAttribute="bottom" id="55Y-wi-PeE"/>
                             <constraint firstItem="UaU-lN-AhR" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leading" id="Cdy-xM-icR"/>
-                            <constraint firstItem="fvT-MU-2vX" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leading" constant="10" id="VUH-vJ-fhR"/>
+                            <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="Q6e-bj-hqV" secondAttribute="bottom" constant="10" id="EUF-wO-TvC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Q6e-bj-hqV" secondAttribute="trailing" constant="-6" id="HHk-1o-57c"/>
+                            <constraint firstItem="fvT-MU-2vX" firstAttribute="leading" secondItem="iCu-yn-rF9" secondAttribute="leadingMargin" constant="-6" id="MTZ-qI-TSU"/>
+                            <constraint firstItem="Q6e-bj-hqV" firstAttribute="leading" secondItem="fvT-MU-2vX" secondAttribute="trailing" constant="256" id="Oq6-fo-TUL"/>
                             <constraint firstItem="0VA-pj-aH6" firstAttribute="top" secondItem="fvT-MU-2vX" secondAttribute="bottom" constant="10" id="eSn-KB-Txo"/>
+                            <constraint firstItem="Q6e-bj-hqV" firstAttribute="leading" secondItem="fvT-MU-2vX" secondAttribute="trailing" constant="256" id="fRb-p5-4VP"/>
                             <constraint firstAttribute="trailing" secondItem="UaU-lN-AhR" secondAttribute="trailing" id="gGZ-mT-l0X"/>
-                            <constraint firstAttribute="trailing" secondItem="fvT-MU-2vX" secondAttribute="trailing" constant="288" id="mCs-ax-dVX"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="krf-ch-pHX" appends="YES" id="t3E-Dh-K7P"/>
@@ -160,6 +171,7 @@
                     <connections>
                         <outlet property="panRecognizer" destination="krf-ch-pHX" id="IkS-U2-mHI"/>
                         <outlet property="pullButton" destination="fvT-MU-2vX" id="GFq-QU-byp"/>
+                        <outlet property="shareButton" destination="Q6e-bj-hqV" id="9wW-X4-4tK"/>
                         <outlet property="tableView" destination="UaU-lN-AhR" id="wgu-YI-5hy"/>
                     </connections>
                 </viewController>

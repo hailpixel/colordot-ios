@@ -18,6 +18,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *pullButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panRecognizer;
 
 @property (strong, nonatomic) ColorPickerController *colorPickerController;
@@ -26,6 +28,7 @@
 @property (strong, nonatomic) NSIndexPath *reorderingCellIndexPath;
 
 - (IBAction)pullButtonAction:(id)sender;
+- (IBAction)shareButtonAction:(id)sender;
 - (void)growDragUpViewByValue:(CGFloat)size;
 - (void)saveContext;
 

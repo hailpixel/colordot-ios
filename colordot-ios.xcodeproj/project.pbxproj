@@ -38,6 +38,7 @@
 		3B5B6007198270C000B6826D /* Color+Increments.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6006198270C000B6826D /* Color+Increments.m */; };
 		3B642F9D19E5059B00212EA3 /* Color+ReadableTextColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */; };
 		3B9942B319F23F6400378950 /* UILocationAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9942B219F23F6400378950 /* UILocationAxis.m */; };
+		3B9942BD19F3155200378950 /* Palette+HailpixelIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9942BC19F3155200378950 /* Palette+HailpixelIntegration.m */; };
 		3BB5BD40195E640A009A0E34 /* PaletteVCGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */; };
 		3BC4117419A68F950068DCF3 /* UIView+Clone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117319A68F950068DCF3 /* UIView+Clone.m */; };
 		3BC4117A19A69B0F0068DCF3 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC4117919A69B0F0068DCF3 /* UIView+Shadow.m */; };
@@ -80,7 +81,7 @@
 		03C182A0195D9B6B00551C2F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3B0739C01959BE8B00FF2FAF /* Constants.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.pch; sourceTree = "<group>"; };
 		3B1B3B18195D9ABA0095DCFF /* PaletteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteViewController.h; sourceTree = "<group>"; };
-		3B1B3B19195D9ABA0095DCFF /* PaletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteViewController.m; sourceTree = "<group>"; };
+		3B1B3B19195D9ABA0095DCFF /* PaletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PaletteViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3B3BE023197903D300B9A222 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		3B3BE024197903D300B9A222 /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		3B3BE026197903D300B9A222 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
@@ -102,6 +103,8 @@
 		3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Color+ReadableTextColor.m"; path = "../Color+ReadableTextColor.m"; sourceTree = "<group>"; };
 		3B9942B119F23F6400378950 /* UILocationAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILocationAxis.h; path = "colordot-ios/UILocationAxis.h"; sourceTree = "<group>"; };
 		3B9942B219F23F6400378950 /* UILocationAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UILocationAxis.m; path = "colordot-ios/UILocationAxis.m"; sourceTree = "<group>"; };
+		3B9942BB19F3155200378950 /* Palette+HailpixelIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Palette+HailpixelIntegration.h"; sourceTree = "<group>"; };
+		3B9942BC19F3155200378950 /* Palette+HailpixelIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Palette+HailpixelIntegration.m"; sourceTree = "<group>"; };
 		3BB5BD3E195E640A009A0E34 /* PaletteVCGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteVCGestureHandler.h; sourceTree = "<group>"; };
 		3BB5BD3F195E640A009A0E34 /* PaletteVCGestureHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteVCGestureHandler.m; sourceTree = "<group>"; };
 		3BC4117219A68F950068DCF3 /* UIView+Clone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Clone.h"; sourceTree = "<group>"; };
@@ -299,6 +302,8 @@
 				3B5B6006198270C000B6826D /* Color+Increments.m */,
 				3B642F9B19E5059B00212EA3 /* Color+ReadableTextColor.h */,
 				3B642F9C19E5059B00212EA3 /* Color+ReadableTextColor.m */,
+				3B9942BB19F3155200378950 /* Palette+HailpixelIntegration.h */,
+				3B9942BC19F3155200378950 /* Palette+HailpixelIntegration.m */,
 				3BC4117219A68F950068DCF3 /* UIView+Clone.h */,
 				3BC4117319A68F950068DCF3 /* UIView+Clone.m */,
 				3BC4117819A69B0F0068DCF3 /* UIView+Shadow.h */,
@@ -414,6 +419,7 @@
 				3B5748A619B5A5CA0026B1C0 /* NavigationControllerDelegate.m in Sources */,
 				3B3BE025197903D300B9A222 /* Palette.m in Sources */,
 				3BED71001978310200829417 /* PalettePickerViewController.m in Sources */,
+				3B9942BD19F3155200378950 /* Palette+HailpixelIntegration.m in Sources */,
 				03636E36195A253D00F05395 /* ColorPickerController.m in Sources */,
 				3B3BE028197903D300B9A222 /* Color.m in Sources */,
 				3B9942B319F23F6400378950 /* UILocationAxis.m in Sources */,

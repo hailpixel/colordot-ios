@@ -11,6 +11,7 @@
 #import "ColorPickerView.h"
 
 #import "Palette.h"
+#import "Palette+HailpixelIntegration.h"
 #import "Color.h"
 #import "Color+ReadableTextColor.h"
 
@@ -63,7 +64,7 @@
     [self.view addGestureRecognizer:longPressRecognizer];
     
     [self setupDragUpView];
-    [self updateButton];
+    [self updateButtons];
 }
 
 - (void)didReceiveMemoryWarning
@@ -133,13 +134,13 @@
     }
 }
 
-#pragma mark - Add/Remove methods
+#pragma mark - Button actions
 - (void)pullButtonAction:(id)sender
 {
     if (self.colorsArray.count < 6) {
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
-            [self updateButton];
+            [self updateButtons];
         }];
         
         [self.tableView beginUpdates];
@@ -158,6 +159,15 @@
         [CATransaction commit];
     }
 }
+
+- (IBAction)shareButtonAction:(id)sender
+{
+    NSString *message = @"Check out this color palette:";
+    NSString *urlString = [self.palette generateHailpixelURL].absoluteString;
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[message, urlString] applicationActivities:nil];
+    [self.navigationController presentViewController:activityViewController animated:YES completion:NULL];
+}
+
 
 
 #pragma mark - Color Picker Management
@@ -189,7 +199,8 @@
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
         self.pullButton.hidden = NO;
-        [self updateButton];
+        self.shareButton.hidden = NO;
+        [self updateButtons];
     }];
     
     [self.tableView beginUpdates];
@@ -207,6 +218,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.pullButton.hidden = YES;
+    self.shareButton.hidden = YES;
     
     if (!self.colorPickerController) {
         [CATransaction begin];
@@ -247,20 +259,23 @@
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.pullButton.hidden = YES;
+    self.shareButton.hidden = YES;
 }
 
 - (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.pullButton.hidden = NO;
-    [self updateButton];
+    self.shareButton.hidden = NO;
+    [self updateButtons];
 }
 
 
 #pragma mark - Private methods
-- (void)updateButton
+- (void)updateButtons
 {
     UIColor *color = ((Color *)self.colorsArray[self.colorsArray.count - 1]).readableTextColor;
     self.pullButton.tintColor = [color colorWithAlphaComponent:0.63f];
+    self.shareButton.tintColor = [color colorWithAlphaComponent:0.63f];
 }
 
 #pragma mark Data management
